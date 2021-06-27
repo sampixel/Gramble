@@ -1,0 +1,17 @@
+{
+    "name": "sampixel/gramble",
+    "description": "A simply MVC framework in php",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "sampixel",
+            "email": "rekasamuel0@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "./src"
+        }
+    },
+    "require": {}
+}
