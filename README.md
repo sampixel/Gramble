@@ -20,3 +20,7 @@ If you want to enable error log in browser run `./gramble enable-error-logs`
 - [ ] Add feature for enabling error logs
 - [ ] Add `render_view` feature
 - [ ] Add feature for adding new route from terminal/console input
+- [ ] Create a command that enable/disable error logs
+- [ ] Create a make file to enable gramble package locally/globally
+- [ ] Add a template that can be extended from other views
+- [ ] Customize the 404 status view

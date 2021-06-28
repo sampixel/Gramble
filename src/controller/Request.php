@@ -39,4 +39,15 @@ class Request {
 		return strtolower($_SERVER["REQUEST_METHOD"]);
 	}
 
+	/**
+	 * Shows 404 status when route does not match
+	 * 
+	 * @return callback The 404 Status to display
+	 */
+	public function get_error_page() {
+		return function() {
+			echo "404 Status Brooohhh<br>";
+		};
+	}
+
 }

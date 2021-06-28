@@ -3,12 +3,12 @@
 /**
  * This file contains the main core of the application process
  * 
- * @package	App\Controller
+ * @package	app\controller
  * @license https://mit-license.org/ MIT License
  * @author	Samuel Reka <rekasamuel0@gmail.com
  */
 
-namespace App\Controller;
+namespace app\controller;
 
 /** Class Application */
 class Application {
@@ -38,15 +38,22 @@ class Application {
 	 * Gets the path, the method and the callback function
 	 * 
 	 * Once it gets the actual path and method, it
-	 * executes the function callback
+	 * executes the function callback and if the latter
+	 * is false throws a 404 status page
+	 * 
+	 * @return void
 	 */
 	public function run() {
 		$path	  = $this->request->get_path();
 		$method   = $this->request->get_method();
-		$callback = $this->router->routes[$method][$path];
+		$callback = $this->router->routes[$method][$path] ?? false;
 
-		echo __DIR__ . "/../View/profile.phtml";
-		include(__DIR__ . call_user_func($callback));
+		if (!$callback) {
+			$this->request->get_error_page();
+			exit();
+		}
+
+		require_once $_SERVER["DOCUMENT_ROOT"] . "/../src/View/" . call_user_func($callback);
 	}
 
 }

@@ -8,7 +8,7 @@
  * @author	Samuel Reka <rekasamuel0@gmail.com>
  */
 
-use App\Controller\Application;
+use app\controller\Application;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
@@ -17,11 +17,8 @@ $app = new Application;
 $app->enable_errors(1);
 
 $app->router->match("/", "get", function() {
-	return "/../src/View/index.phtml";
-});
-
-$app->router->match("/profile", "get", function() {
-	return "/../src/View/profile.phtml";
+	$GLOBALS["config"] = ["version" => "v0.1.0"];
+	return "index.phtml";
 });
 
 $app->run();
