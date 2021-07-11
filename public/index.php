@@ -2,23 +2,37 @@
 
 /**
  * This file contains basic functionality for running the framework
- * Basically it provides routing access from the browser
  * 
  * @license	https://mit-license.org/ MIT License
  * @author	Samuel Reka <rekasamuel0@gmail.com>
  */
 
-use app\controller\Application;
+define("DIR", dirname(__DIR__));
 
-require_once __DIR__ . "/../vendor/autoload.php";
+require DIR . "/app/controllers/Application.php";
+//require DIR . "/src/controllers/DashboardController.php";
+//require DIR . "/src/controllers/ProfileController.php";
 
-$app = new Application;
+use app\controllers\Application;
+//use src\controllers\DashboardController;
+//use src\controllers\ProfileController;
 
-$app->enable_errors(1);
+$app = new Application(DIR);
 
-$app->router->match("/", "get", function() {
-	$GLOBALS["config"] = ["version" => "v0.1.0"];
-	return "index.phtml";
+$app->router->get("/", function() {
+	//$dashBoardController = new DashboardController; .. from DashboardController will be managed all informations
+
+	$arrayData = [];
+	//$arrData["userinfo"] = $dashBoard->getUserInfo();
+	return [DIR . "/src/views/home.php", $arrayData];
+});
+
+$app->router->get("/profile", function() {
+	//$profileController = new ProfileController; .. get all informations and so on
+
+	$arrayData = [];
+	//$arrData["userinfo"] = $profileController->getUserInfo();
+	return [DIR . "/src/views/profile.php", $arrayData];
 });
 
 $app->run();
