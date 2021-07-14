@@ -12,9 +12,11 @@ namespace app\controllers;
 
 require "Router.php";
 require "Request.php";
+require "Response.php";
 
 use app\controllers\Router;
 use app\controllers\Request;
+use app\controllers\Response;
 
 /**
  * Class Application
@@ -23,11 +25,13 @@ class Application {
 
 	public Router $router;
 	public Request $request;
+	public Response $response;
 	public static string $ROOTPATH;
 
 	public function __construct($DIR) {
 		$this->router	= new Router($DIR);
 		$this->request 	= new Request($DIR);
+		$this->response = new Response($DIR);
 		self::$ROOTPATH = $DIR;
 	}
 
@@ -43,7 +47,8 @@ class Application {
 		if ($callback !== false) {
 			$this->render(call_user_func($callback));
 		} else {
-			$this->request->getErrorPage();	// TODO Set status to 404
+			$this->response->setStatusError();
+			$this->request->getErrorPage();
 		}
 	}
 

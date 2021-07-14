@@ -97,7 +97,7 @@ class Request {
 	 * Requires 404 status when route does not match
 	 */
 	public function getErrorPage() {
-		require self::$ROOTPATH . "/public/assets/404.html";
+		require self::$ROOTPATH . "/app/views/404.html";
 	}
 
 }
