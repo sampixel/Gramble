@@ -30,8 +30,8 @@ class Application {
 
 	public function __construct($DIR) {
 		$this->router	= new Router($DIR);
-		$this->request 	= new Request($DIR);
 		$this->response = new Response($DIR);
+		$this->request 	= new Request($DIR);
 		self::$ROOTPATH = $DIR;
 	}
 
@@ -47,9 +47,7 @@ class Application {
 		if ($callback !== false) {
 			$this->render(call_user_func($callback));
 		} else {
-			if ($this->response->setResponseCode(404)) {
-				$this->request->getErrorPage();
-			}
+			$this->request->getErrorPage();
 		}
 	}
 

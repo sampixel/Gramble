@@ -24,4 +24,4 @@ If you want to enable error log in browser run `./gramble enable-error-logs`
 - [ ] Add "clear logs" command that deletes phpd.log file
 - [ ] Remove all html/php files from src folder (this should be a skeleton project)
 - [x] url need to fix when the path end with "/" (page is loaded correctly but can't load style and script files)
-- [ ] Find a way to pass an array of data inside the php view
+- [x] Find a way to pass an array of data inside the php view

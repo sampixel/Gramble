@@ -22,7 +22,22 @@ $app->router->get("/", function() {
 
 $app->router->get("/profile", function() {
 	$arrayData = [];
+	$arrayData["userinfo"] = [
+		"name" => "Samuel",
+		"jobs" => "Developer",
+		"born" => "Italy"
+	];
+
 	return [DIR . "/src/views/profile.php", $arrayData];
+});
+
+$app->router->get("/contact", function() {
+	$arrayData = [];
+	return [DIR . "/src/views/contact.php", $arrayData];
+});
+
+$app->router->post("/contact", function() {
+	return [DIR . "/src/views/contact.php", []];
 });
 
 $app->run();

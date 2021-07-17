@@ -11,11 +11,15 @@
 
 namespace app\controllers;
 
+use app\controllers\Response;
+
 class Request {
 
+	public Response $response;
 	public static string $ROOTPATH;
 
 	public function __construct($DIR) {
+		$this->response = new Response($DIR);
 		self::$ROOTPATH = $DIR;
 	}
 
@@ -68,11 +72,15 @@ class Request {
 	}
 
 	/**
-	 * Returns the inner content as html text
-	 * @param  string $viewPath The path view
+	 * Returns the inner content as html text and passes array data within it
+	 * @param  array  $viewPath The array containing data
 	 * @return string $viewHtml The view as html
 	 */
-	public function getContent($viewPath) {
+	public function getContent(array $viewPath) {
+		foreach ($viewPath[1] as $key => $value) {
+			$$key = $value;
+		}
+
 		ob_start();
 		require_once $viewPath[0];
 		$viewHtml = ob_get_clean();
@@ -97,7 +105,9 @@ class Request {
 	 * Requires 404 status when route does not match
 	 */
 	public function getErrorPage() {
-		require self::$ROOTPATH . "/app/views/404.html";
+		if ($this->response->setResponseCode(404)) {
+			require self::$ROOTPATH . "/app/views/404.html";
+		}
 	}
 
 }

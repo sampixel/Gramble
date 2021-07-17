@@ -1,0 +1,38 @@
+div.main-form-div {
+	text-align: center;
+	font-family: 'Anton', sans-serif;
+}
+
+span.main-form-title {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+form.main-form {
+	display: inline-grid;
+	width: 20%;
+	font-family: inherit;
+	margin-top: 20px;
+}
+
+input.form-input {
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+button.form-button {
+	margin-top: 10px;
+	background-color: #0d08ff;
+	transition: all 0.3s;
+	color: white;
+	padding: 2px 4px;
+	border: 1px solid #0d08ff;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+button.form-button:hover {
+	cursor: pointer;
+	background-color: white;
+	color: #0d08ff;
+}
