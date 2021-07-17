@@ -20,9 +20,13 @@ class Response {
 
 	/**
 	 * Sets a status code of 404
+	 * 
+	 * @param  int  $status The status code
+	 * @return bool true
 	 */
-	public function setStatusError() {
-		http_response_code(404);
+	public function setResponseCode($status) {
+		http_response_code($status);
+		return true;
 	}
 
 }

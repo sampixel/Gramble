@@ -4,13 +4,44 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="/assets/css/base.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/%LINK%.css">
+	<link rel="icon" href="/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="//use.fontawesome.com/releases/v5.7.2/css/all.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/css/%LINK%.css"/>
 	<title>%TITLE%</title>
 </head>
 <body>
-	%CONTENT%
-	%FOOTER%
+	<header class="main-sidebar">
+		<ul class="main-sidebar-list">
+			<li class="main-sidebar-item">
+				<span class="main-sidebar-btn js-sidebar">
+					<i class="fas fa-grip-lines sidebar-icon sidebar-btn"></i>
+				</span>
+			</li>
+			<li class="main-sidebar-item">
+				<a class="main-sidebar-anchor" href="/">
+					<i class="fas fa-home sidebar-icon"></i>
+				</a>
+			</li>
+			<li class="main-sidebar-item">
+				<a class="main-sidebar-anchor" href="/profile">
+					<i class="fas fa-user-alt sidebar-icon"></i>
+				</a>
+			</li>
+			<li class="main-sidebar-item">
+				<a class="main-sidebar-anchor" href="/settings">
+					<i class="fas fa-cogs sidebar-icon"></i>
+				</a>
+			</li>
+			<li class="main-sidebar-item">
+				<a class="main-sidebar-anchor" href="/services">
+					<i class="fab fa-servicestack sidebar-icon"></i>
+				</a>
+			</li>
+		</ul>
+	</header>
+	<div class="inner-content">%CONTENT%</div>
+	<footer class="inner-footer">%FOOTER%</div>
 	<script type="text/javascript" src="/assets/js/base.js"></script>
 	<script type="text/javascript" src="/assets/js/%LINK%.js"></script>
 </body>

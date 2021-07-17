@@ -1,1 +1,8 @@
-/phpd.log/
+/assets/css/**
+/assets/js/**
+/assets/img/**
+/src/controllers/**
+/src/models/**
+/src/views/**
+/app/views/base.html
+/app/views/footer.html

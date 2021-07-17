@@ -47,8 +47,9 @@ class Application {
 		if ($callback !== false) {
 			$this->render(call_user_func($callback));
 		} else {
-			$this->response->setStatusError();
-			$this->request->getErrorPage();
+			if ($this->response->setResponseCode(404)) {
+				$this->request->getErrorPage();
+			}
 		}
 	}
 
@@ -58,8 +59,8 @@ class Application {
 	 */
 	public function render($view) {
 		$footerContent	= $this->request->getFooter(self::$ROOTPATH . "/app/views/footer.html");
-		$viewContent 	= $this->request->getContent($view);
 		$baseLayout 	= $this->request->getLayout(self::$ROOTPATH . "/app/views/base.html");
+		$viewContent 	= $this->request->getContent($view);
 		$routeName 		= $this->request->getRouteName();
 
 		$arrayOrigin	= ["%LINK%", "%TITLE%", "%CONTENT%", "%FOOTER%"];
