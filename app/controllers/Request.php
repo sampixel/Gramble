@@ -11,17 +11,7 @@
 
 namespace app\controllers;
 
-use app\controllers\Response;
-
 class Request {
-
-	public Response $response;
-	public static string $ROOTPATH;
-
-	public function __construct($DIR) {
-		$this->response = new Response($DIR);
-		self::$ROOTPATH = $DIR;
-	}
 
 	/**
 	 * Gets the effective absolute route name without including queries or slashes
@@ -102,11 +92,33 @@ class Request {
 	}
 
 	/**
-	 * Requires 404 status when route does not match
+	 * Sanitize the method for get and post to avoid malicious submitted data
+	 * @return array $bodyContent The array containing sanitized data
 	 */
-	public function getErrorPage() {
-		if ($this->response->setResponseCode(404)) {
-			require self::$ROOTPATH . "/app/views/404.html";
+	public function getBody() {
+		$bodyContent = [];
+
+		if ($this->getMethod() === "get") {
+			foreach ($_GET as $key => $value) {
+				$bodyContent[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+			}
+		} elseif ($this->getMethod() === "post") {
+			foreach ($_POST as $key => $value) {
+				$bodyContent[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+			}
+		}
+
+		return $bodyContent;
+	}
+
+	/**
+	 * Requires 404 status when route does not match
+	 * @param object $respone The Response object instance
+	 * @param object $config  The Config object instance
+	 */
+	public function getErrorPage($response, $config) {
+		if ($response->setResponseCode(404)) {
+			require DIR . $config->retrieveErrorPath();
 		}
 	}
 

@@ -10,13 +10,10 @@
 
 namespace app\controllers;
 
-require "Router.php";
-require "Request.php";
-require "Response.php";
-
 use app\controllers\Router;
 use app\controllers\Request;
 use app\controllers\Response;
+use app\libraries\Config;
 
 /**
  * Class Application
@@ -26,13 +23,13 @@ class Application {
 	public Router $router;
 	public Request $request;
 	public Response $response;
-	public static string $ROOTPATH;
+	public Config $config;
 
-	public function __construct($DIR) {
-		$this->router	= new Router($DIR);
-		$this->response = new Response($DIR);
-		$this->request 	= new Request($DIR);
-		self::$ROOTPATH = $DIR;
+	public function __construct() {
+		$this->router	= new Router;
+		$this->response = new Response;
+		$this->request 	= new Request;
+		$this->config   = new Config;
 	}
 
 	/**
@@ -47,17 +44,17 @@ class Application {
 		if ($callback !== false) {
 			$this->render(call_user_func($callback));
 		} else {
-			$this->request->getErrorPage();
+			$this->request->getErrorPage($this->response, $this->config);
 		}
 	}
 
 	/**
 	 * This method replaces the given view in the base file and displays the final view
-	 * @param string $view The view path as string
+	 * @param array $view The array containing view and data
 	 */
-	public function render($view) {
-		$footerContent	= $this->request->getFooter(self::$ROOTPATH . "/app/views/footer.html");
-		$baseLayout 	= $this->request->getLayout(self::$ROOTPATH . "/app/views/base.html");
+	public function render(array $view) {
+		$footerContent	= $this->request->getFooter(DIR . "/app/views/footer.html");
+		$baseLayout 	= $this->request->getLayout(DIR . "/app/views/base.html");
 		$viewContent 	= $this->request->getContent($view);
 		$routeName 		= $this->request->getRouteName();
 

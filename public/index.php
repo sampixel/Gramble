@@ -9,11 +9,13 @@
 
 define("DIR", dirname(__DIR__));
 
-require DIR . "/app/controllers/Application.php";
+require_once DIR . "/public/autoloader.php";
 
 use app\controllers\Application;
+use src\controllers\ProfileController;
+use src\controllers\ContactController;
 
-$app = new Application(DIR);
+$app = new Application;
 
 $app->router->get("/", function() {
 	$arrayData = [];
@@ -21,23 +23,27 @@ $app->router->get("/", function() {
 });
 
 $app->router->get("/profile", function() {
-	$arrayData = [];
-	$arrayData["userinfo"] = [
-		"name" => "Samuel",
-		"jobs" => "Developer",
-		"born" => "Italy"
-	];
+	$profileController = new ProfileController;
+	$arrayData["userinfo"] = $profileController->getProfileInfo();
 
 	return [DIR . "/src/views/profile.php", $arrayData];
 });
 
-$app->router->get("/contact", function() {
-	$arrayData = [];
-	return [DIR . "/src/views/contact.php", $arrayData];
-});
+$app->router->match("/contact", [
+	"GET"  => function() {
+		$contactController = new ContactController;
+		$arrayData = [];
+		$arrayData["content"] = $contactController->retrieveGetList();
 
-$app->router->post("/contact", function() {
-	return [DIR . "/src/views/contact.php", []];
-});
+		return [DIR . "/src/views/contact.php", $arrayData];
+	},
+	"POST" => function() {
+		$contactController = new ContactController;
+		$arrayData = [];
+		$arrayData["submitted"] = $contactController->retrievePostList();
+
+		return [DIR . "/src/views/contact.php", $arrayData];
+	}
+]);
 
 $app->run();

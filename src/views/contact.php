@@ -11,3 +11,14 @@
 		<button class="form-button" name="submit" type="submit">Submit</button>
 	</form>
 </div>
+<div>
+	<?php if (!empty($submitted)): ?>
+		<h3>Cogratulations <?= $submitted["username"] ?> !</h3>
+		<span>These are your credentials:</span>
+		<br>
+		<ul>
+			<li>Password: <?= $submitted["password"] ?></span></li>
+			<li>Address: <?= $submitted["address"] ?></span></li>
+		</ul>
+	<?php endif ?>
+</div>

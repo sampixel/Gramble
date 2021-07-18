@@ -12,12 +12,6 @@ namespace app\controllers;
 
 class Response {
 
-	public static string $ROOTPATH;
-
-	public function __construct($DIR) {
-		self::$ROOTPATH = $DIR;
-	}
-
 	/**
 	 * Sets a status code of 404
 	 * 
