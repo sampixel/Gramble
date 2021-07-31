@@ -14,18 +14,20 @@ use app\controllers\Application;
 
 class ContactController extends Application {
 
-	public function retrieveGetList() {
-		$this->request->getBody();
-	}
+    /**
+     * Retrieves data using get method
+     */
+    public function retrieveGetList() {
+        $arrData = $this->request->getBody();
+        $this->render("src/views/contact.php", $arrData);
+    }
 
-	/**
-	 * Return the post data values submitted
-	 * @return array $contactInfo The array containing post data
-	 */
-	public function retrievePostList() {
-		$contactInfo = $this->request->getBody();
-
-		return $contactInfo;
-	}
+    /**
+     * Sends data using post method
+     */
+    public function retrievePostList() {
+        $arrData = $this->request->getBody();
+        $this->render("src/views/contant.php", $arrData);
+    }
 
 }

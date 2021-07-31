@@ -10,20 +10,20 @@
 
 namespace src\controllers;
 
-class ProfileController {
+use app\controllers\Application;
 
-	/**
-	 * Returns the user info details
-	 * @return array $profileInfo The array containing view and info
-	 */
-	public function getProfileInfo() {
-		$profileInfo = [
-			"name" => "Samuel",
-			"jobs" => "Developer",
-			"born" => "Italy"
-		];
+class ProfileController extends Application {
 
-		return $profileInfo;
-	}
+    /**
+     * Returns the user info details
+     */
+    public function getProfileInfo() {
+        $arrData["userinfo"] = [
+            "name" => "Samuel",
+            "jobs" => ["Mechanic", "Dealer", "Programmer"],
+            "born" => "Italy (TR)"
+        ];
+        $this->render("/src/views/profile.php", $arrData);
+    }
 
 }

@@ -10,18 +10,39 @@
 
 namespace app\libraries;
 
+/**
+ * Class Config
+ * 
+ * - retrieveErrorPath()
+ */
 class Config {
 
-	private string $_404 = "/app/views/404.html";
+    protected string $_404    = "/app/views/404.html";
+    protected string $_base   = "/app/views/base.html";
+    protected string $_footer = "/app/views/footer.html";
 
-	/**
-	 * Returns the 404 page path
-	 * @return string $errorPath The view 404
-	 */
-	public function retrieveErrorPath() {
-		$errorPath = $this->_404;
+    /**
+     * Returns the 404 page path
+     * @return string The view 404
+     */
+    public function error() {
+        return DIR . $this->_404;
+    }
 
-		return $errorPath;
-	}
+    /**
+     * Returns the footer path
+     * @return string The footer view
+     */
+    public function footer() {
+        return DIR . $this->_footer;
+    }
+
+    /**
+     * Returns the base path
+     * @return string The base view
+     */
+    public function base() {
+        return DIR . $this->_base;
+    }
 
 }
