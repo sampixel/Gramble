@@ -1,6 +1,4 @@
 .vscode
-package
-package/gramble
 app/views/*
 public/assets/css/*
 public/assets/img/*

@@ -13,36 +13,19 @@ namespace app\libraries;
 /**
  * Class Config
  * 
- * - retrieveErrorPath()
+ * @param string $_base
+ * @param string $_footer
+ * @param string $_error
  */
 class Config {
 
-    protected string $_404    = "/app/views/404.html";
-    protected string $_base   = "/app/views/base.html";
-    protected string $_footer = "/app/views/footer.html";
+    /** @var string $_base */
+    public string $base = "/app/views/base.html";
 
-    /**
-     * Returns the 404 page path
-     * @return string The view 404
-     */
-    public function error() {
-        return DIR . $this->_404;
-    }
+    /** @var string $_footer */
+    public string $footer = "/app/views/footer.html";
 
-    /**
-     * Returns the footer path
-     * @return string The footer view
-     */
-    public function footer() {
-        return DIR . $this->_footer;
-    }
-
-    /**
-     * Returns the base path
-     * @return string The base view
-     */
-    public function base() {
-        return DIR . $this->_base;
-    }
+    /** @var string $error */
+    public string $error = "/app/views/error.html";
 
 }

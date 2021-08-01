@@ -27,9 +27,10 @@ class Request {
 
     /**
      * Gets the effective absolute route name without including queries or slashes
+     * 
      * @return string $path The effective path name
      */
-    public function path() {
+    public function route() {
         $path = $_SERVER["REQUEST_URI"] ?? "/";
         $pos = strpos($path, "?");
         $path = ($pos !== false ? substr($path, 0, $pos) : $path);
@@ -40,6 +41,7 @@ class Request {
 
     /**
      * Gets the method for the actual route name
+     * 
      * @return string The actual method used
      */
     public function method() {
@@ -47,7 +49,38 @@ class Request {
     }
 
     /**
+     * Checks if the route name is available inside folders, then returns the relative path
+     * 
+     * @param  string $file The given filename to match
+     * @param  string $dir  The given directory name
+     * 
+     * @return string $path The relative pathname
+     */
+    public function fileParser($file, $dir) {
+        $path = $file;
+        $mainScan = scandir(DIR . "/public/assets/$dir", 2);
+        foreach ($mainScan as $main) {
+            if (!is_dir(DIR . "/public/assets/$dir/$main")) {
+                if ($main === "$file.$dir") {
+                    break;
+                }
+            } else {
+                $subScan = scandir(DIR . "/public/assets/$dir/$main", 2);
+                foreach ($subScan as $sub) {
+                    if ($sub === "$file.$dir") {
+                        $path = "$main/$file";
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $path;
+    }
+
+    /**
      * Returns the absolute route name without slashes
+     * 
      * @return string $routeName The current route name
      */
     public function getRouteName() {
@@ -62,10 +95,12 @@ class Request {
 
     /**
      * Returns the base layout as html text
+     * 
      * @param  string $basePath The base path
+     * 
      * @return string $baseHtml  The buffer layout
      */
-    public function getLayout($basePath) {
+    public function getBase($basePath) {
         ob_start();
         require_once $basePath;
         $baseHtml = ob_get_clean();
@@ -75,8 +110,10 @@ class Request {
 
     /**
      * Returns the inner content as html text and passes array data within it
+     * 
      * @param  string $viewPath The view path
      * @param  array  $arrData  The array containing data
+     * 
      * @return string $viewHtml The view as html
      */
     public function getContent($viewPath, $arrData) {
@@ -92,7 +129,9 @@ class Request {
 
     /**
      * Returns the footer content as html text
+     * 
      * @param  string $footerPath The footer path
+     * 
      * @return string $footerHtml The footer as html
      */
     public function getFooter($footerPath) {
@@ -105,6 +144,7 @@ class Request {
 
     /**
      * Sanitize the method for get and post to avoid malicious submitted data
+     * 
      * @return array $bodyContent The array containing sanitized data
      */
     public function getBody() {
@@ -125,7 +165,9 @@ class Request {
 
     /**
      * Returns the given path with slash at beginning, if it's missed
+     * 
      * @param  string $path    The given path to add slash to
+     * 
      * @return string $newPath The path if slash padding
      */
     public function slashPadding($path) {
@@ -139,12 +181,13 @@ class Request {
 
     /**
      * Requires 404 status when route does not match
+     * 
      * @param object $respone The Response object instance
      * @param object $config  The Config object instance
      */
     public function getError($response, $config) {
         if ($response->setResponseCode(404)) {
-            require $config->error();
+            require DIR . $config->error;
         }
     }
 

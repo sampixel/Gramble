@@ -1,6 +1,3 @@
-<h1>This is my Home Page</h1>
-<div>
-    <?php for ($i = 0; $i < count($userinfo); $i++): ?>
-        <span><?= $i ?></span>
-    <?php endfor ?>
-</div>
+<h1>This is the Main Page</h1>
+<span style="font-size: 18px">My name is <?= $userinfo["fname"] ?> <?= $userinfo["lname"] ?></span><br>
+<span style="font-size: 10px">Im a <?= $userinfo["former"] ?> in <?= $userinfo["movie"] ?> movie</span>

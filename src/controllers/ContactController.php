@@ -27,7 +27,7 @@ class ContactController extends Application {
      */
     public function retrievePostList() {
         $arrData = $this->request->getBody();
-        $this->render("src/views/contant.php", $arrData);
+        $this->render("src/views/contact.php", $arrData);
     }
 
 }
