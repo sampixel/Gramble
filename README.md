@@ -1,4 +1,4 @@
-# Gramble MVC Framework<style>img {vertical-align: middle; animation: animate-rotation 10s linear infinite;} @keyframes animate-rotation {from {transform: rotate(0deg);} to {transform: rotate(360deg);}}</style><img height="60px" width="60px" src="public/favicon.png"/>
+# Gramble MVC Framework
 
 ## Disclaimer
 This documentation is for educational only purpose.\
