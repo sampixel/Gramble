@@ -18,7 +18,7 @@ class ContactController extends Application {
      * Retrieves data using get method
      */
     public function retrieveGetList() {
-        $arrData = $this->request->getBody();
+        $arrData["submitted"] = $this->request->get();  // FIXME get doesn't require body sanitization
         $this->render("src/views/contact.php", $arrData);
     }
 
@@ -26,7 +26,7 @@ class ContactController extends Application {
      * Sends data using post method
      */
     public function retrievePostList() {
-        $arrData = $this->request->getBody();
+        $arrData["submitted"] = $this->request->post();
         $this->render("src/views/contact.php", $arrData);
     }
 

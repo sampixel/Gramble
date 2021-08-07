@@ -11,6 +11,9 @@ html, body {
 }
 
 header.main-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     transition: all 0.5s;
     background-color: #14161a;
     position: fixed;
@@ -66,6 +69,24 @@ i.sidebar-btn {
     border: 1px solid white;
     border-radius: 4px;
     padding: 2px 8px;
+}
+
+img.main-sidebar-image {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    left: calc(50% - 25px);
+    bottom: 25px;
+    animation: animate-rotation 10s linear infinite;
+}
+
+@keyframes animate-rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 div.inner-content {

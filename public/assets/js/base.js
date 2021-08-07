@@ -17,7 +17,7 @@ if (jsSidebarButton) {
         } else {
             parentHeader.style.width = "7.5em";
             for (let i = 1; i < parentList.childElementCount; i++) {
-                let spanEl = document.createElement("SPAN");
+                let spanEl = document.createElement("span");
                 spanEl.innerHTML = jsSidebarTitles[i-1];
                 spanEl.className = "main-sidebar-title";
                 parentList.children[i].children[0].append(spanEl);

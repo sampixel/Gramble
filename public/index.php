@@ -14,5 +14,7 @@ require_once DIR . "/public/autoloader.php";
 $app = new app\controllers\Application;
 
 $app->router->get("/", [src\controllers\UserController::class, "getUserInfo"]);
+$app->router->get("/contact", [src\controllers\ContactController::class, "retrieveGetList"]);
+$app->router->post("/contact", [src\controllers\ContactController::class, "retrievePostList"]);
 
 $app->run();

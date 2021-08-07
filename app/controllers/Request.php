@@ -49,6 +49,38 @@ class Request {
     }
 
     /**
+     * Sanitize data for get method
+     * 
+     * @return array $body The array containing get sanitized data
+     */
+    public function get() {
+        $body = [];
+        if ($this->method() === "get") {
+            foreach ($_GET as $key => $value) {
+                $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            }
+        }
+
+        return $body;
+    }
+
+    /**
+     * Sanitize data for post method
+     * 
+     * @return array $body The array containing post sanitized data
+     */
+    public function post() {
+        $body = [];
+        if ($this->method() === "post") {
+            foreach ($_POST as $key => $value) {
+                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            }
+        }
+
+        return $body;
+    }
+
+    /**
      * Checks if the route name is available inside folders, then returns the relative path
      * 
      * @param  string $file The given filename to match
@@ -56,7 +88,7 @@ class Request {
      * 
      * @return string $path The relative pathname
      */
-    public function fileParser($file, $dir) {
+    public function parser($file, $dir) {
         $path = $file;
         $mainScan = scandir(DIR . "/public/assets/$dir", 2);
         foreach ($mainScan as $main) {
@@ -143,27 +175,6 @@ class Request {
     }
 
     /**
-     * Sanitize the method for get and post to avoid malicious submitted data
-     * 
-     * @return array $bodyContent The array containing sanitized data
-     */
-    public function getBody() {
-        $bodyContent = [];
-
-        if ($this->method() === "get") {
-            foreach ($_GET as $key => $value) {
-                $bodyContent[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-            }
-        } elseif ($this->method() === "post") {
-            foreach ($_POST as $key => $value) {
-                $bodyContent[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-            }
-        }
-
-        return $bodyContent;
-    }
-
-    /**
      * Returns the given path with slash at beginning, if it's missed
      * 
      * @param  string $path    The given path to add slash to
@@ -189,6 +200,13 @@ class Request {
         if ($response->setResponseCode(404)) {
             require DIR . $config->error;
         }
+    }
+
+    /**
+     * Starts a new session
+     */
+    public function sessionStart() {
+        session_start();
     }
 
 }

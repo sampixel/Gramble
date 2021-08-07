@@ -45,9 +45,10 @@ class Application {
         if ($className !== null) {
             $classMethods = get_class_methods($className);
             foreach ($classMethods as $key) {
-                if (in_array($methodName, $classMethods)) {
+                if ($methodName === $key) {
                     $controller = new $className;
                     $controller->$key();
+                    return true;
                 }
             }
         }
@@ -74,18 +75,17 @@ class Application {
      * @param array  $data The array data
      */
     public function render($view, $data) {
-        $baseLayout   = $this->config->base !== null ? $this->request->getBase(DIR . $this->config->base) : "<html><head></head><body></body></html>";
-        $footerLayout = $this->config->footer !== null ? $this->request->getFooter(DIR . $this->config->footer) : "<footer></footer>";
-        $viewContent  = $this->request->getContent(DIR . $this->request->slashPadding($view), $data);
-        $absRouteName = $this->request->getRouteName();
-        $cssFileName  = $this->request->fileParser($absRouteName, "css");
-        $jsFileName   = $this->request->fileParser($absRouteName, "js");
+        $base    = $this->request->getBase(DIR . ($data["layout"] ?? $this->config->base));
+        $footer  = $this->request->getFooter(DIR . $this->config->footer);
+        $content = $this->request->getContent(DIR . $this->request->slashPadding($view), $data);
+        $route   = $this->request->getRouteName();
+        $cssFile = $this->request->parser($route, "css");
+        $jsFile  = $this->request->parser($route, "js");
 
-        $arrayOrigin  = ["%LINK%", "%TITLE%", "%CONTENT%", "%FOOTER%", "%SCRIPT%"];
-        $arrayReplace = [$cssFileName, ucfirst($absRouteName), $viewContent, $footerLayout, $jsFileName];
+        $origin  = ["%LINK%", "%TITLE%", "%CONTENT%", "%FOOTER%", "%SCRIPT%"];
+        $replace = [$cssFile, ucfirst($route), $content, $footer, $jsFile];
 
-        $finalView = str_replace($arrayOrigin, $arrayReplace, $baseLayout);
-        echo $finalView;
+        echo str_replace($origin, $replace, $base);
     }
 
 }

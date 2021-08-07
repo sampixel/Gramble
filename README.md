@@ -1,4 +1,4 @@
-# Gramble framework
+# Gramble MVC Framework<style>img {vertical-align: middle; animation: animate-rotation 10s linear infinite;} @keyframes animate-rotation {from {transform: rotate(0deg);} to {transform: rotate(360deg);}}</style><img height="60px" width="60px" src="public/favicon.png"/>
 
 ## Disclaimer
 This documentation is for educational only purpose.\
@@ -12,7 +12,7 @@ The way others frameworks work and other similar concepts are mandatory to know 
 To launch the web server run `php -S localhost:5000 -t public/` from inside your project directory.\
 Then open your favorite browser and type the address on the url field.
 
-<br />
+---
 
 ### Create a new Route Link annotation function
 The program core starts from `/public/index.php` where all the classes are initialized through an `autoloader.php` file, so you don't have to request the same class every time you need it by calling the `require_once` or `include_once` function (instead use the `use` php keyword to initialize classes).\
@@ -47,7 +47,7 @@ The following is the very basic syntax for executing a controller method:
         $app->run();
         ```
 
-<br />
+---
 
 ### Create a Controller for GET/POST requests
 In the example above i just mentioned a controller class and its method name, so now you have to create a new one with the same name and a public method with the same method name:
@@ -74,7 +74,8 @@ class MainController extends Application {
 
     public function postUserInfo() {
         ...
-        $this->response->json(...); // work in progress ...
+        $arrData["submitted"] = $this->request->post();
+        $this->render("src/views/contact.php", $arrData);
     }
 
 }
@@ -83,16 +84,15 @@ class MainController extends Application {
 The steps to follow when creating a new controller class are the following:
 - Add the `namespace` where the actual controller is located
 - Use the `Application` controller provided by Gramble
-- Create a class with the same name mentioned in `index.php`
+- Create a class with the same name mentioned in `index.php` and extend the `Application` controller
 - Create a method with the same name mentioned in `index.php`
 
-<br />
 
-Based on what method you are using the returning result should be different:
-- The `get` method function is rendering an html view with the relative array of data to be passed in
-- The `post` method function is returning a response in format of json string
+**NOTE**: For *post* methods, gramble provides a simple utility function that sanitizes data from malicious characters and this is accomplished by calling `$this->request->post()` method.
 
-<br />
+> Both method functions should return a view to be rendered.
+
+---
 
 ### Passing data into the view
 Now that you've mentioned a view path inside the render function, you need to create a new one.\
@@ -133,20 +133,20 @@ Let's take a look at this view:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
     <link rel="stylesheet" type="text/css" href="/assets/css/base.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/css/%FILE%.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/%LINK%.css"/>
     <title>%TITLE%</title>
 </head>
 <body>
     <div class="inner-content">%CONTENT%</div>
     <footer class="inner-footer">%FOOTER%</div>
     <script type="text/javascript" src="/assets/js/base.js"></script>
-    <script type="text/javascript" src="/assets/js/%FILE%.js"></script>
+    <script type="text/javascript" src="/assets/js/%SCRIPT%.js"></script>
 </body>
 </html>
 ```
 
 Notice the words surrounded by the `%` symbol, these will be replaced with the respective values:
-- `%LINK%` and `%SCRIPT%` will be replaced with the absolute route name, this means that if the `/user/profile/settings` route is requested, only the `settings` route name should be taken, so you should create a new file for both css and js with the previous route name.\
+- `%LINK%` and `%SCRIPT%` will be replaced with the absolute route name, this means that if the `/user/profile/settings` route is requested, only the `settings` route name should be taken, so you should create a new file for both css and js with the previous route name\
 **NOTE**: If the given route name is located inside a sub directory, gramble will execute a parsing function inside the `css` and `js` folder to find this one and eventually will return the correct path, just be aware to not create multiple files with the same name
 - `%TITLE` will be replaced with the absolute route name as well, but with the first letter in uppercase
 - `%CONTENT%` will be replaced with the rendered view that you passed in using `$app->render()` function, to be clear the content of the previous **src/views/main.html** file
@@ -246,5 +246,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     - fixes route name by removing/adding slashes from user input
     - autoloader function to automate the required classes
     - support for both `get` and `post` requests
+    - support for parsing css/js files inside folders (one level deep)
     - enable passing data from controller to view
     - enable templates for `base`, `footer`, `error` views
+    - enable custom `layout` extension instead of `base`
