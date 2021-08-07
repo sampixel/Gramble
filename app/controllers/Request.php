@@ -92,16 +92,28 @@ class Request {
         $path = $file;
         $mainScan = scandir(DIR . "/public/assets/$dir", 2);
         foreach ($mainScan as $main) {
-            if (!is_dir(DIR . "/public/assets/$dir/$main")) {
+            if (!is_dir(DIR . "/public/assets/$dir/$main") && ($main !== "." || $main !== "..")) {
                 if ($main === "$file.$dir") {
                     break;
                 }
             } else {
                 $subScan = scandir(DIR . "/public/assets/$dir/$main", 2);
                 foreach ($subScan as $sub) {
-                    if ($sub === "$file.$dir") {
-                        $path = "$main/$file";
-                        break;
+                    if (!is_dir(DIR . "/public/assets/$dir/$main/$sub") && ($sub !== "." || $sub !== "..")) {
+                        if ($sub === "$file.$dir") {
+                            $path = "$main/$file";
+                            break;
+                        }
+                    } else {
+                        $deepScan = scandir(DIR . "/public/assets/$dir/$main/$sub", 2);
+                        foreach ($deepScan as $deep) {
+                            if (!is_dir(DIR . "/public/assets/$dir/$main/$sub/$deep") && ($deep !== "." || $deep !== "..")) {
+                                if ($deep === "$file.$dir") {
+                                    $path = "$main/$sub/$file";
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             }

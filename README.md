@@ -13,6 +13,7 @@ To launch the web server run `php -S localhost:5000 -t public/` from inside your
 Then open your favorite browser and type the address on the url field.
 
 ---
+<br />
 
 ### Create a new Route Link annotation function
 The program core starts from `/public/index.php` where all the classes are initialized through an `autoloader.php` file, so you don't have to request the same class every time you need it by calling the `require_once` or `include_once` function (instead use the `use` php keyword to initialize classes).\
@@ -48,6 +49,7 @@ The following is the very basic syntax for executing a controller method:
         ```
 
 ---
+<br />
 
 ### Create a Controller for GET/POST requests
 In the example above i just mentioned a controller class and its method name, so now you have to create a new one with the same name and a public method with the same method name:
@@ -88,11 +90,12 @@ The steps to follow when creating a new controller class are the following:
 - Create a method with the same name mentioned in `index.php`
 
 
-**NOTE**: For *post* methods, gramble provides a simple utility function that sanitizes data from malicious characters and this is accomplished by calling `$this->request->post()` method.
+**NOTE**: For `post` methods, gramble provides a simple utility function that sanitizes data variables from malicious characters and this is accomplished by calling `$this->request->post()` method.
 
-> Both method functions should return a view to be rendered.
+> Both methods function should return a view to be rendered.
 
 ---
+<br />
 
 ### Passing data into the view
 Now that you've mentioned a view path inside the render function, you need to create a new one.\
@@ -171,6 +174,54 @@ class Config {
 
 > By Gramble v0.1.0 the only available and customizable templates variable are **$base**, **$footer**, **$error** which are respectively the base, the footer and the error (404) view.
 
+---
+<br />
+
+### Extend a custom layout
+A custom layout can be extended just by including an additional key value pair inside the array of data to be returned from your Controller:
+
+```php
+<?php
+...
+namespace src\controllers;
+
+use app\controllers\Application;
+
+class MainController extends Application {
+
+    public function getUserInfo() {
+        $arrData["layout"] = "src/views/my_custom_template.html"
+        ...
+
+        $this->render("src/views/main.php", $arrData);
+    }
+
+    ...
+}
+```
+As you can see, a property named `layout` was populated inside the array with the **relative** path of the custom layout as value.\
+Now let's take a look now at `src/views/my_custom_template.html` custom view:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/assets/css/%LINK%.css"/>
+    <title>%TITLE%</title>
+</head>
+<body>
+    <div>%CONTENT%</div>
+    <footer>%FOOTER%</footer>
+    <script type="text/javascript" src="/assets/js/%SCRIPT%.js"></script>
+</body>
+</html>
+```
+
+> As i mentioned in the previous chapter, all the special characters surrounded by `%` symbol should be included as well to prevent bad loading of layouts.
+
 <br />
 
 ## Syntax
@@ -246,7 +297,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     - fixes route name by removing/adding slashes from user input
     - autoloader function to automate the required classes
     - support for both `get` and `post` requests
-    - support for parsing css/js files inside folders (one level deep)
+    - support for parsing css/js files inside folders
     - enable passing data from controller to view
     - enable templates for `base`, `footer`, `error` views
     - enable custom `layout` extension instead of `base`

@@ -75,7 +75,7 @@ class Application {
      * @param array  $data The array data
      */
     public function render($view, $data) {
-        $base    = $this->request->getBase(DIR . ($data["layout"] ?? $this->config->base));
+        $base    = $this->request->getBase(DIR . ($data["layout"] ? $this->request->slashPadding($data["layout"]) : $this->config->base));
         $footer  = $this->request->getFooter(DIR . $this->config->footer);
         $content = $this->request->getContent(DIR . $this->request->slashPadding($view), $data);
         $route   = $this->request->getRouteName();
