@@ -12,4 +12,10 @@ namespace app\libraries;
 
 class Database {
 
+    public Config $config;
+
+    public function __construct() {
+
+    }
+
 }

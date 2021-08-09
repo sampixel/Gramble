@@ -62,8 +62,8 @@ class Application {
         $route  = $this->request->route();
         $method = $this->request->method();
         $params = $this->router->callback($method, $route);
-        $callback = $this->methodClass($params[0], $params[1]);
-        if ($callback === null) {
+        $callback = $params !== null ? $this->methodClass($params[0], $params[1]) : false;
+        if ($callback === false) {
             $this->request->getError($this->response, $this->config);
         }
     }
@@ -76,7 +76,7 @@ class Application {
      */
     public function render($view, $data) {
         $base    = $this->request->getBase(DIR . ($data["layout"] ? $this->request->slashPadding($data["layout"]) : $this->config->base));
-        $footer  = $this->request->getFooter(DIR . $this->config->footer);
+        $footer  = $this->config->footer !== null ? $this->request->getFooter(DIR . $this->config->footer) : "This is the footer";
         $content = $this->request->getContent(DIR . $this->request->slashPadding($view), $data);
         $route   = $this->request->getRouteName();
         $cssFile = $this->request->parser($route, "css");

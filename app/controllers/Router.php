@@ -91,7 +91,7 @@ class Router {
      * @return array The array containing routes
      */
     public function callback($method, $route) {
-        return $this->routes[$method][$route];
+        return $this->routes[$method][$route] ?? null;
     }
 
 }

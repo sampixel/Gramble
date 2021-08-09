@@ -17,10 +17,10 @@ Then open your favorite browser and type the address on the url field.
 
 ### Create a new Route Link annotation function
 The program core starts from `/public/index.php` where all the classes are initialized through an `autoloader.php` file, so you don't have to request the same class every time you need it by calling the `require_once` or `include_once` function (instead use the `use` php keyword to initialize classes).\
-From within this `/public/index.php` you should be able to bind to the relative route name a given function and the method.\
+From within this `/public/index.php` you should be able to bind to the relative route name a given method function.\
 As you will see i instantiated a new class called `Application` which is the class that provides basic functionality to elaborate general requests and for running the application by showing the content in form of html.\
 The first thing to do is to call the public method of the `Router` class depending on what method (get or post) you want to use.\
-The following is the very basic syntax for executing a controller method:
+The following is the very basic syntax for executing a controller's method:
 
 - get(`@param` $route, `@param` $callback)
     - $route `string` The requested route
@@ -90,7 +90,7 @@ The steps to follow when creating a new controller class are the following:
 - Create a method with the same name mentioned in `index.php`
 
 
-**NOTE**: For `post` methods, gramble provides a simple utility function that sanitizes data variables from malicious characters and this is accomplished by calling `$this->request->post()` method.
+**NOTE**: For `post` methods, Gramble provides a simple utility function that sanitizes data variables from malicious characters and this is accomplished by calling `$this->request->post()` method.
 
 > Both methods function should return a view to be rendered.
 
@@ -150,9 +150,9 @@ Let's take a look at this view:
 
 Notice the words surrounded by the `%` symbol, these will be replaced with the respective values:
 - `%LINK%` and `%SCRIPT%` will be replaced with the absolute route name, this means that if the `/user/profile/settings` route is requested, only the `settings` route name should be taken, so you should create a new file for both css and js with the previous route name\
-**NOTE**: If the given route name is located inside a sub directory, gramble will execute a parsing function inside the `css` and `js` folder to find this one and eventually will return the correct path, just be aware to not create multiple files with the same name
-- `%TITLE` will be replaced with the absolute route name as well, but with the first letter in uppercase
-- `%CONTENT%` will be replaced with the rendered view that you passed in using `$app->render()` function, to be clear the content of the previous **src/views/main.html** file
+**NOTE**: If the given route name is located inside a sub directory, Gramble will execute a parsing function inside the `css` and `js` folder to find this one and eventually will return the correct path, just be aware to not create multiple files with the same name
+- `%TITLE%` will be replaced with the absolute route name as well, but with the first letter in uppercase
+- `%CONTENT%` will be replaced with the rendered view that you passed in using `$app->render()` function, to be clear the content of the previous **src/views/main.php** file
 - `%FOOTER%` will be replaced eventually with the view given in the `config` class
 
 > The base view is also fully customizable, but make sure to include these special characters in it so you don't run into problems.
@@ -236,7 +236,7 @@ For better readability the main conventions syntax to use inside views file are 
         <span>The given variable is true</span><br>
     <?php elseif ($variable === false): ?>
         <span>The given variable is false</span><br>
-    <?php else ?>
+    <?php else: ?>
         <span>The given variable has type of <?= gettype($variable) ?></span><br>
     <?php endif ?>
     ```
