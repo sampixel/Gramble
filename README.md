@@ -19,14 +19,14 @@ Then open your favorite browser and type the address on the url field.
 The program core starts from `/public/index.php` where all the classes are initialized through an `autoloader.php` file, so you don't have to request the same class every time you need it by calling the `require_once` or `include_once` function (instead use the `use` php keyword to initialize classes).\
 From within this `/public/index.php` you should be able to bind to the relative route name a given method function.\
 As you will see i instantiated a new class called `Application` which is the class that provides basic functionality to elaborate general requests and for running the application by showing the content in form of html.\
-The first thing to do is to call the public method of the `Router` class depending on what method (get or post) you want to use.\
-The following is the very basic syntax for executing a controller's method:
+The first thing to do is to call the public function of the `Router` class depending on what request method you want to use.\
+The following is the very basic syntax for executing a controller's function:
 
 - get(`@param` $route, `@param` $callback)
     - $route `string` The requested route
     - $callback `array` The array containing class and method name
-        - `@param` The name of class to trigger written as namespace
-        - `@param` The name of method to trigger written as string
+        - `@param` The name of the class to trigger written as static namespace class
+        - `@param` The name of the method to trigger written as string
         ```php
         <?php
         ...
@@ -38,8 +38,8 @@ The following is the very basic syntax for executing a controller's method:
 - post(`@param` $route, `@param` $callback)
     - $route `string` The requested route
     - $callback `array` The array containing class and method name
-        - `@param` The name of class to trigger written as namespace
-        - `@param` The name of method to trigger written as string
+        - `@param` The name of the class to trigger written as static namespace class
+        - `@param` The name of the method to trigger written as string
         ```php
         <?php
         ...
@@ -88,6 +88,7 @@ The steps to follow when creating a new controller class are the following:
 - Use the `Application` controller provided by Gramble
 - Create a class with the same name mentioned in `index.php` and extend the `Application` controller
 - Create a method with the same name mentioned in `index.php`
+- Call the `render` function from the `Application` controller
 
 
 **NOTE**: For `post` methods, Gramble provides a simple utility function that sanitizes data variables from malicious characters and this is accomplished by calling `$this->request->post()` method.
@@ -107,13 +108,15 @@ Inside `src/views/main.php` add the following lines:
 <span style="font-size: 10px">Im a <?= $userinfo["job"] ?> in <?= $userinfo["movie"] ?> movie</span>
 ```
 
+> For the sake of this introduction i've mixed this php file with some internal css for styling the text, but a good practice is to attach an external css file and do these things there.
+
 Now open your browser at [localhost:5000](http://localhost:5000) and you will see this content in form of clean html.
 
 <br />
 
 ## Layouts
 Layouts have a relevant importance, as they can include a layout each time a page is loaded without having to write it in each view file.\
-To accomplish this work, Gramble comes in with a basic template for including a `base` layout that is mentioned inside `app\libraries\Config` file as a string path:
+To accomplish this work, Gramble comes in with a basic template for including a `base` layout that is mentioned inside `app\libraries\Config` class as a string path:
 
 ```php
 <?php
@@ -224,6 +227,61 @@ Now let's take a look now at `src/views/my_custom_template.html` custom view:
 
 <br />
 
+## Database
+A database connection in quite mandatory as well for running an application which requires storing massive data about users, articles, products etc...\
+You can do so by just defining some basic variables inside `app\libraries\Config` class:
+
+```php
+<?php
+class Config {
+    ...
+    public static string $hostname = "my_hostname";
+    public static string $dbname = "my_database_name";
+    public static string $username = "my_username";
+    public static string $password = "my_password";
+    ...
+}
+```
+
+Basically you're setting all the properties needed to define a new `\PDO` connection with your local database, let's discover their functionality:
+- `hostname` can be of value `localhost` or `127.0.0.1` or `0.0.0.0`
+- `dbname` is the name of your database
+- `username` can be of value `root` if other users were not defined
+- `password` is the password used to access the database
+
+> If no password is used to access the database, an empty string must be stored within the password variable since it indicates that no password is used to access the database.\
+For more reference see [Connections and Connection Managment](https://www.php.net/manual/en/pdo.connections.php)
+
+---
+<br />
+
+### Enable configuration
+To enable pdo database support you must uncomment some lines from your local `php.ini` file.\
+First off, if you have multiple versions of php, you need to find the actual configuration file that your system is actually using.\
+
+From a Linux machine you can type:
+
+```bash
+$ php --ini
+```
+
+Output:
+```bash
+Configuration File (php.ini) Path: /etc/php
+Loaded Configuration File:         /etc/php/php.ini
+Scan for additional .ini files in: /etc/php/conf.d
+Additional .ini files parsed:      /etc/php/conf.d/xdebug.ini
+```
+
+The file you need to make changes is stored under `Loaded Configuration File`.\
+Once you've found this file, open it and uncomment the following lines by toggling `;` semicolons:
+
+```ini
+extension=pdo_mysql
+```
+
+<br />
+
 ## Syntax
 For better readability the main conventions syntax to use inside views file are the following:
 - Use the shortcut `<?= $variable ?>` instead of `<?php echo $variable ?>`
@@ -301,3 +359,4 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     - enable passing data from controller to view
     - enable templates for `base`, `footer`, `error` views
     - enable custom `layout` extension instead of `base`
+    - support database connection

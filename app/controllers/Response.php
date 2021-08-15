@@ -1,8 +1,6 @@
 <?php
 
 /**
- * This file gives response status to browser
- * 
  * @package app\controllers
  * @license https://mit-license.org/ MIT License
  * @author  Samuel Reka <rekasamuel0@gmail.com>

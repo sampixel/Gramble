@@ -1,4 +1,5 @@
 .vscode
+gramble.odg
 app/views/*
 public/assets/css/*
 public/assets/img/*

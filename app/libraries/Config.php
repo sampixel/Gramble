@@ -1,8 +1,6 @@
 <?php
 
 /**
- * This file contains all configurations for runnig the framework properly
- * 
  * @package app\libraries
  * @license https://mit-license.org/ MIT License
  * @author  Samuel Reka <rekasamuel0@gmail.com>
@@ -13,9 +11,13 @@ namespace app\libraries;
 /**
  * Class Config
  * 
- * @param string $_base
- * @param string $_footer
- * @param string $_error
+ * @param string $base
+ * @param string $footer
+ * @param string $error
+ * @param string $hostname
+ * @param string $dbname
+ * @param string $root
+ * @param string $password
  */
 class Config {
 
@@ -25,5 +27,14 @@ class Config {
     public string $footer = "/app/views/footer.html";
     /** @var string $error The error view layout */
     public string $error = "/app/views/error.html";
+
+    /** @var string $hostname The host name */
+    public static string $hostname = "localhost";
+    /** @var string $dbname The database name */
+    public static string $dbname = "test";
+    /** @var string $username The user name */
+    public static string $username = "root";
+    /** @var string $password The password */
+    public static string $password = "123";
 
 }

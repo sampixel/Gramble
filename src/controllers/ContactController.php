@@ -1,24 +1,23 @@
 <?php
 
+namespace src\controllers;
+
+use app\controllers\Application;
+
 /**
- * This class handles the contact section
+ * Class ContactController
  * 
  * @package src\controllers
  * @license https://mit-license.org/ MIT License
  * @author  Samuel Reka <rekasamuel0@gmail.com>
  */
-
-namespace src\controllers;
-
-use app\controllers\Application;
-
 class ContactController extends Application {
 
     /**
      * Retrieves data using get method
      */
     public function retrieveGetList() {
-        $arrData["submitted"] = $this->request->get();  // FIXME get doesn't require body sanitization
+        $arrData["submitted"] = $this->request->get();
         $this->render("src/views/contact.php", $arrData);
     }
 

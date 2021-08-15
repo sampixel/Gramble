@@ -18,13 +18,28 @@ use app\libraries\Config;
 
 /**
  * Class Application
+ * 
+ * @param object $router
+ * @param object $request
+ * @param object $response
+ * @param object $database
+ * @param object $config
+ * 
+ * - methodClass()
+ * - run()
+ * - render()
  */
 class Application {
 
+    /** @var object $router */
     public Router $router;
+    /** @var object $request */
     public Request $request;
+    /** @var object $response */
     public Response $response;
+    /** @var object $database */
     public Database $database;
+    /** @var object $config */
     public Config $config;
 
     public function __construct() {
@@ -38,8 +53,8 @@ class Application {
     /**
      * Runs the class method if this one exists in class object
      * 
-     * @param  object $className  The class to examine
-     * @param  string $methodName The method to match
+     * @param object $className  The class to examine
+     * @param string $methodName The method to match
      */
     public function methodClass($className, $methodName) {
         if ($className !== null) {
@@ -75,10 +90,10 @@ class Application {
      * @param array  $data The array data
      */
     public function render($view, $data) {
-        $base    = $this->request->getBase(DIR . ($data["layout"] ? $this->request->slashPadding($data["layout"]) : $this->config->base));
-        $footer  = $this->config->footer !== null ? $this->request->getFooter(DIR . $this->config->footer) : "This is the footer";
-        $content = $this->request->getContent(DIR . $this->request->slashPadding($view), $data);
-        $route   = $this->request->getRouteName();
+        $base    = $this->request->getBase(APP_ROOT . ($data["layout"] ? $this->request->slashPadding($data["layout"]) : $this->config->base));
+        $footer  = $this->config->footer !== null ? $this->request->getFooter(APP_ROOT . $this->config->footer) : "Footer";
+        $content = $this->request->getContent(APP_ROOT . $this->request->slashPadding($view), $data);
+        $route   = $this->request->absRoute();
         $cssFile = $this->request->parser($route, "css");
         $jsFile  = $this->request->parser($route, "js");
 

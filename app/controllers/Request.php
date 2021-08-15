@@ -1,9 +1,6 @@
 <?php
 
 /**
- * This file contains url string manipolation to
- * match the exact route requested from the client
- * 
  * @package app\controllers
  * @license https://mit-license.org/ MIT License
  * @author  Samuel Reka <rekasamuel0@gmail.com>
@@ -14,29 +11,33 @@ namespace app\controllers;
 /**
  * Class Request
  * 
- * - path()
+ * - route()
  * - method()
- * - getRouteName()
- * - getLayout()
+ * - get()
+ * - post()
+ * - parser()
+ * - absRoute()
+ * - getBase()
  * - getContent()
  * - getFooter()
- * - getBody()
  * - getError()
+ * - slashPadding()
+ * - sessionStart()
  */
 class Request {
 
     /**
      * Gets the effective absolute route name without including queries or slashes
      * 
-     * @return string $path The effective path name
+     * @return string $route The effective path name
      */
     public function route() {
-        $path = $_SERVER["REQUEST_URI"] ?? "/";
-        $pos = strpos($path, "?");
-        $path = ($pos !== false ? substr($path, 0, $pos) : $path);
-        $path = ($path !== "/" && $path[strlen($path)-1] === "/" ? substr_replace($path, "", -1) : $path);
+        $route = $_SERVER["REQUEST_URI"] ?? "/";
+        $pos = strpos($route, "?");
+        $path = ($pos !== false ? substr($route, 0, $pos) : $route);
+        $route = ($route !== "/" && $route[strlen($route)-1] === "/" ? substr_replace($route, "", -1) : $route);
 
-        return $path;
+        return $route;
     }
 
     /**
@@ -90,24 +91,24 @@ class Request {
      */
     public function parser($file, $dir) {
         $path = $file;
-        $mainScan = scandir(DIR . "/public/assets/$dir", 2);
+        $mainScan = scandir(APP_ROOT . "/public/assets/$dir", 2);
         foreach ($mainScan as $main) {
-            if (!is_dir(DIR . "/public/assets/$dir/$main") && ($main !== "." || $main !== "..")) {
+            if (!is_dir(APP_ROOT . "/public/assets/$dir/$main") && ($main !== "." || $main !== "..")) {
                 if ($main === "$file.$dir") {
                     break;
                 }
             } else {
-                $subScan = scandir(DIR . "/public/assets/$dir/$main", 2);
+                $subScan = scandir(APP_ROOT . "/public/assets/$dir/$main", 2);
                 foreach ($subScan as $sub) {
-                    if (!is_dir(DIR . "/public/assets/$dir/$main/$sub") && ($sub !== "." || $sub !== "..")) {
+                    if (!is_dir(APP_ROOT . "/public/assets/$dir/$main/$sub") && ($sub !== "." || $sub !== "..")) {
                         if ($sub === "$file.$dir") {
                             $path = "$main/$file";
                             break;
                         }
                     } else {
-                        $deepScan = scandir(DIR . "/public/assets/$dir/$main/$sub", 2);
+                        $deepScan = scandir(APP_ROOT . "/public/assets/$dir/$main/$sub", 2);
                         foreach ($deepScan as $deep) {
-                            if (!is_dir(DIR . "/public/assets/$dir/$main/$sub/$deep") && ($deep !== "." || $deep !== "..")) {
+                            if (!is_dir(APP_ROOT . "/public/assets/$dir/$main/$sub/$deep") && ($deep !== "." || $deep !== "..")) {
                                 if ($deep === "$file.$dir") {
                                     $path = "$main/$sub/$file";
                                     break;
@@ -127,7 +128,7 @@ class Request {
      * 
      * @return string $routeName The current route name
      */
-    public function getRouteName() {
+    public function absRoute() {
         $explodedURL = explode("/", $_SERVER["REQUEST_URI"]);
         if (empty($explodedURL[count($explodedURL)-1])) {
             unset($explodedURL[count($explodedURL)-1]);
@@ -187,6 +188,18 @@ class Request {
     }
 
     /**
+     * Requires 404 status when route does not match
+     * 
+     * @param object $respone The Response object instance
+     * @param object $config  The Config object instance
+     */
+    public function getError($response, $config) {
+        if ($response->setResponseCode(404)) {
+            require APP_ROOT . $config->error;
+        }
+    }
+
+    /**
      * Returns the given path with slash at beginning, if it's missed
      * 
      * @param  string $path    The given path to add slash to
@@ -200,18 +213,6 @@ class Request {
         }
 
         return $newPath;
-    }
-
-    /**
-     * Requires 404 status when route does not match
-     * 
-     * @param object $respone The Response object instance
-     * @param object $config  The Config object instance
-     */
-    public function getError($response, $config) {
-        if ($response->setResponseCode(404)) {
-            require DIR . $config->error;
-        }
     }
 
     /**
