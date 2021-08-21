@@ -4,8 +4,6 @@
 This documentation is for educational only purpose.\
 The way others frameworks work and other similar concepts are mandatory to know if you want to understand what they do in the background.
 
-<br />
-
 ## Instructions
 
 ### Run the php's local web server
@@ -13,7 +11,6 @@ To launch the web server run `php -S localhost:5000 -t public/` from inside your
 Then open your favorite browser and type the address on the url field.
 
 ---
-<br />
 
 ### Create a new Route Link annotation function
 The program core starts from `/public/index.php` where all the classes are initialized through an `autoloader.php` file, so you don't have to request the same class every time you need it by calling the `require_once` or `include_once` function (instead use the `use` php keyword to initialize classes).\
@@ -49,7 +46,6 @@ The following is the very basic syntax for executing a controller's function:
         ```
 
 ---
-<br />
 
 ### Create a Controller for GET/POST requests
 In the example above i just mentioned a controller class and its method name, so now you have to create a new one with the same name and a public method with the same method name:
@@ -96,7 +92,6 @@ The steps to follow when creating a new controller class are the following:
 > Both methods function should return a view to be rendered.
 
 ---
-<br />
 
 ### Passing data into the view
 Now that you've mentioned a view path inside the render function, you need to create a new one.\
@@ -111,8 +106,6 @@ Inside `src/views/main.php` add the following lines:
 > For the sake of this introduction i've mixed this php file with some internal css for styling the text, but a good practice is to attach an external css file and do these things there.
 
 Now open your browser at [localhost:5000](http://localhost:5000) and you will see this content in form of clean html.
-
-<br />
 
 ## Layouts
 Layouts have a relevant importance, as they can include a layout each time a page is loaded without having to write it in each view file.\
@@ -138,15 +131,15 @@ Let's take a look at this view:
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
-    <link rel="stylesheet" type="text/css" href="/assets/css/base.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/css/%LINK%.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/styles/base.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/styles/%LINK%.css"/>
     <title>%TITLE%</title>
 </head>
 <body>
     <div class="inner-content">%CONTENT%</div>
     <footer class="inner-footer">%FOOTER%</div>
-    <script type="text/javascript" src="/assets/js/base.js"></script>
-    <script type="text/javascript" src="/assets/js/%SCRIPT%.js"></script>
+    <script type="text/javascript" src="/assets/scripts/base.js"></script>
+    <script type="text/javascript" src="/assets/scripts/%SCRIPT%.js"></script>
 </body>
 </html>
 ```
@@ -178,7 +171,6 @@ class Config {
 > By Gramble v0.1.0 the only available and customizable templates variable are **$base**, **$footer**, **$error** which are respectively the base, the footer and the error (404) view.
 
 ---
-<br />
 
 ### Extend a custom layout
 A custom layout can be extended just by including an additional key value pair inside the array of data to be returned from your Controller:
@@ -225,8 +217,6 @@ Now let's take a look now at `src/views/my_custom_template.html` custom view:
 
 > As i mentioned in the previous chapter, all the special characters surrounded by `%` symbol should be included as well to prevent bad loading of layouts.
 
-<br />
-
 ## Database
 A database connection in quite mandatory as well for running an application which requires storing massive data about users, articles, products etc...\
 You can do so by just defining some basic variables inside `app\libraries\Config` class:
@@ -253,7 +243,6 @@ Basically you're setting all the properties needed to define a new `\PDO` connec
 For more reference see [Connections and Connection Managment](https://www.php.net/manual/en/pdo.connections.php)
 
 ---
-<br />
 
 ### Enable configuration
 To enable pdo database support you must uncomment some lines from your local `php.ini` file.\
@@ -279,8 +268,6 @@ Once you've found this file, open it and uncomment the following lines by toggli
 ```ini
 extension=pdo_mysql
 ```
-
-<br />
 
 ## Syntax
 For better readability the main conventions syntax to use inside views file are the following:
@@ -334,12 +321,8 @@ For better readability the main conventions syntax to use inside views file are 
 
 > For more information visit [Control Structures Alternative Syntax](https://www.php.net/manual/en/control-structures.alternative-syntax.php#control-structures.alternative-syntax).
 
-<br />
-
 ## License
-
 ### The MIT License (MIT)
-
 #### Copyright © 2021 sampixel
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -347,8 +330,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-<br />
 
 ## Changelog
 - **v0.1.0** - *beta release*:

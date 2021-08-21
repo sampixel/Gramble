@@ -1,0 +1,76 @@
+[Sat Aug 21 18:42:48 2021] PHP 8.0.9 Development Server (http://0.0.0.0:9091) started
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36072 Accepted
+[Sat Aug 21 18:51:36 2021] PHP Warning:  Undefined array key "layout" in /home/sampixel/development/php/mvc/gramble/app/controllers/Application.php on line 93
+[Sat Aug 21 18:51:36 2021] PHP Stack trace:
+[Sat Aug 21 18:51:36 2021] PHP   1. {main}() /home/sampixel/development/php/mvc/gramble/public/index.php:0
+[Sat Aug 21 18:51:36 2021] PHP   2. app\controllers\Application->run() /home/sampixel/development/php/mvc/gramble/public/index.php:21
+[Sat Aug 21 18:51:36 2021] PHP   3. app\controllers\Application->methodClass($className = 'src\\controllers\\UserController', $methodName = 'getUserInfo') /home/sampixel/development/php/mvc/gramble/app/controllers/Application.php:80
+[Sat Aug 21 18:51:36 2021] PHP   4. src\controllers\UserController->getUserInfo() /home/sampixel/development/php/mvc/gramble/app/controllers/Application.php:65
+[Sat Aug 21 18:51:36 2021] PHP   5. src\controllers\UserController->render($view = 'src/views/home.php', $data = ['userinfo' => ['fname' => 'Thomas', 'lname' => 'A.Anderson', 'former' => 'Software Enginner', 'movie' => 'The Matrix']]) /home/sampixel/development/php/mvc/gramble/src/controllers/UserController.php:34
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36072 [200]: GET /
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36072 Closing
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36076 Accepted
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36076 [200]: GET /assets/styles/base.css
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36076 Closing
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36078 Accepted
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36078 [200]: GET /assets/styles/bla/aoooo/home.css
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36078 Closing
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36080 Accepted
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36082 Accepted
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36082 [200]: GET /assets/scripts/base.js
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36082 Closing
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36080 [200]: GET /assets/scripts/spaccaaa/bellaaaaaaa/home.js
+[Sat Aug 21 18:51:36 2021] 127.0.0.1:36080 Closing
+[Sat Aug 21 18:51:37 2021] 127.0.0.1:36086 Accepted
+[Sat Aug 21 18:51:37 2021] 127.0.0.1:36086 [200]: GET /favicon.png
+[Sat Aug 21 18:51:37 2021] 127.0.0.1:36086 Closing
+[Sat Aug 21 18:51:48 2021] 127.0.0.1:36092 Accepted
+[Sat Aug 21 18:51:50 2021] PHP Warning:  Undefined array key "layout" in /home/sampixel/development/php/mvc/gramble/app/controllers/Application.php on line 93
+[Sat Aug 21 18:51:50 2021] PHP Stack trace:
+[Sat Aug 21 18:51:50 2021] PHP   1. {main}() /home/sampixel/development/php/mvc/gramble/public/index.php:0
+[Sat Aug 21 18:51:50 2021] PHP   2. app\controllers\Application->run() /home/sampixel/development/php/mvc/gramble/public/index.php:21
+[Sat Aug 21 18:51:50 2021] PHP   3. app\controllers\Application->methodClass($className = 'src\\controllers\\ProfileController', $methodName = 'getProfileInfo') /home/sampixel/development/php/mvc/gramble/app/controllers/Application.php:80
+[Sat Aug 21 18:51:50 2021] PHP   4. src\controllers\ProfileController->getProfileInfo() /home/sampixel/development/php/mvc/gramble/app/controllers/Application.php:65
+[Sat Aug 21 18:51:50 2021] PHP   5. src\controllers\ProfileController->render($view = 'src/views/profile.php', $data = ['profileinfo' => ['fname' => 'Michélé', 'lname' => 'Ssempre io', 'city' => 'Arrone 4ever']]) /home/sampixel/development/php/mvc/gramble/src/controllers/ProfileController.php:26
+[Sat Aug 21 18:51:50 2021] 127.0.0.1:36092 [200]: GET /profile
+[Sat Aug 21 18:51:50 2021] 127.0.0.1:36092 Closing
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36094 Accepted
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36096 Accepted
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36094 [404]: GET /assets/styles/profile.css - No such file or directory
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36094 Closing
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36096 [200]: GET /assets/scripts/base.js
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36096 Closing
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36098 Accepted
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36100 Accepted
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36100 [200]: GET /assets/scripts/spaccaaa/bellaaaaaaa/profile.js
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36098 [200]: GET /assets/styles/base.css
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36100 Closing
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36098 Closing
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36102 Accepted
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36102 [200]: GET /favicon.png
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36102 Closing
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36104 Accepted
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36104 [200]: GET /jsonprofile
+[Sat Aug 21 18:51:51 2021] 127.0.0.1:36104 Closing
+[Sat Aug 21 18:52:21 2021] 127.0.0.1:36108 Accepted
+[Sat Aug 21 18:52:21 2021] PHP Warning:  Undefined array key "layout" in /home/sampixel/development/php/mvc/gramble/app/controllers/Application.php on line 93
+[Sat Aug 21 18:52:21 2021] PHP Stack trace:
+[Sat Aug 21 18:52:21 2021] PHP   1. {main}() /home/sampixel/development/php/mvc/gramble/public/index.php:0
+[Sat Aug 21 18:52:21 2021] PHP   2. app\controllers\Application->run() /home/sampixel/development/php/mvc/gramble/public/index.php:21
+[Sat Aug 21 18:52:21 2021] PHP   3. app\controllers\Application->methodClass($className = 'src\\controllers\\ProfileController', $methodName = 'getProfileInfo') /home/sampixel/development/php/mvc/gramble/app/controllers/Application.php:80
+[Sat Aug 21 18:52:21 2021] PHP   4. src\controllers\ProfileController->getProfileInfo() /home/sampixel/development/php/mvc/gramble/app/controllers/Application.php:65
+[Sat Aug 21 18:52:21 2021] PHP   5. src\controllers\ProfileController->render($view = 'src/views/profile.php', $data = ['profileinfo' => ['fname' => 'Michélé', 'lname' => 'Ssempre io', 'city' => 'Arrone 4ever']]) /home/sampixel/development/php/mvc/gramble/src/controllers/ProfileController.php:26
+[Sat Aug 21 18:52:21 2021] 127.0.0.1:36108 [200]: GET /profile
+[Sat Aug 21 18:52:21 2021] 127.0.0.1:36108 Closing
+[Sat Aug 21 18:52:32 2021] 127.0.0.1:36114 Accepted
+[Sat Aug 21 18:52:34 2021] 127.0.0.1:36114 [404]: GET /settings
+[Sat Aug 21 18:52:34 2021] 127.0.0.1:36114 Closing
+[Sat Aug 21 18:52:35 2021] 127.0.0.1:36124 Accepted
+[Sat Aug 21 18:52:35 2021] 127.0.0.1:36124 [404]: GET /favicon.ico - No such file or directory
+[Sat Aug 21 18:52:35 2021] 127.0.0.1:36124 Closing
+[Sat Aug 21 18:52:39 2021] 127.0.0.1:36126 Accepted
+[Sat Aug 21 18:52:44 2021] 127.0.0.1:36126 Closed without sending a request; it was probably just an unused speculative preconnection
+[Sat Aug 21 18:52:44 2021] 127.0.0.1:36126 Closing
+[Sat Aug 21 19:39:41 2021] 127.0.0.1:37266 Accepted
+[Sat Aug 21 19:39:46 2021] 127.0.0.1:37266 Closed without sending a request; it was probably just an unused speculative preconnection
+[Sat Aug 21 19:39:46 2021] 127.0.0.1:37266 Closing

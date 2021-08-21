@@ -7,7 +7,8 @@
 
 define("APP_ROOT", dirname(__DIR__));
 
-require_once APP_ROOT . "/public/autoloader.php";
+require_once APP_ROOT . "/package/autoloader.php";
+require_once APP_ROOT . "/package/migrations.php";
 
 $app = new app\controllers\Application;
 

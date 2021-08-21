@@ -1,0 +1,72 @@
+#!/usr/bin/env php
+<?php
+
+$DIR = getcwd();
+
+/** Check first argument */
+if (empty($argv[1])) {
+    echo "Missing argument [?], type \"list\" to see all commands\n";
+} elseif (!in_array($argv[1], ["list", "new", "run", "stop"])) {
+    echo "Invalid argument \"$argv[1]\", type \"list\" to see all commands\n";
+} else {
+
+    /** Shows command list */
+    if ($argv[1] === "list") {
+        echo "Welcome to Gramble v0.1.0\n";
+        echo "Usage: gramble <action> [arguments]\n\n";
+        echo "  list\tshows all available commands\n";
+        echo "  new\tcreates a new project skeleton\n";
+        echo "  run\truns a local web server at port 9091\n";
+        echo "  stop\tstops the local web server execution\n\n";
+
+    /** Creates a new project skeleton */
+    } elseif ($argv[1] === "new") {
+        if (empty($argv[2])) {
+            echo "Missing argument [project_name]\n";
+        } else {
+            mkdir("$DIR/$argv[2]", 0766);
+            mkdir("$DIR/$argv[2]/app", 0766);
+            mkdir("$DIR/$argv[2]/app/controllers", 0766);
+            mkdir("$DIR/$argv[2]/app/libraries", 0766);
+            mkdir("$DIR/$argv[2]/app/migrations", 0766);
+            mkdir("$DIR/$argv[2]/app/models", 0766);
+            mkdir("$DIR/$argv[2]/app/views", 0766);
+            mkdir("$DIR/$argv[2]/bin", 0766);
+            mkdir("$DIR/$argv[2]/package", 0766);
+            mkdir("$DIR/$argv[2]/public", 0766);
+            mkdir("$DIR/$argv[2]/public/assets", 0766);
+            mkdir("$DIR/$argv[2]/public/assets/styles", 0766);
+            mkdir("$DIR/$argv[2]/public/assets/images", 0766);
+            mkdir("$DIR/$argv[2]/public/assets/scripts", 0766);
+            mkdir("$DIR/$argv[2]/src", 0766);
+            mkdir("$DIR/$argv[2]/src/controllers", 0766);
+            mkdir("$DIR/$argv[2]/src/models", 0766);
+            mkdir("$DIR/$argv[2]/src/views", 0766);
+
+            file_put_contents("$DIR/$argv[2]/app/controllers/Application.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/controllers/Application.php"));
+            file_put_contents("$DIR/$argv[2]/app/controllers/Request.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/controllers/Request.php"));
+            file_put_contents("$DIR/$argv[2]/app/controllers/Response.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/controllers/Response.php"));
+            file_put_contents("$DIR/$argv[2]/app/controllers/Router.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/controllers/Router.php"));
+            file_put_contents("$DIR/$argv[2]/app/libraries/Config.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/libraries/Config.php"));
+            file_put_contents("$DIR/$argv[2]/app/libraries/Database.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/libraries/Database.php"));
+            file_put_contents("$DIR/$argv[2]/app/views/base.html", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/views/base.html"));
+            file_put_contents("$DIR/$argv[2]/app/views/error.html", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/views/error.html"));
+            file_put_contents("$DIR/$argv[2]/bin/gramble", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/bin/gramble"));
+            file_put_contents("$DIR/$argv[2]/package/autoloader.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/package/autoloader.php"));
+            file_put_contents("$DIR/$argv[2]/package/migrations.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/package/migrations.php"));
+            file_put_contents("$DIR/$argv[2]/public/index.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/public/index.php"));
+
+            echo "New project \"$argv[2]\" created succesfully\n";
+        }
+
+    } elseif ($argv[1] === "run") {
+        shell_exec("nohup php -S 127.0.0.1:9091 -t public/ > phpd-log 2>&1 & PHP_SERVER_PDI=$!");
+        echo "Server started at http://127.0.0.1:9091\n";
+    } elseif ($argv[1] === "stop") {
+        shell_exec("kill -3 PHP_SERVER_PID");
+        echo "Server stopped succesfully\n";
+    }
+
+}
+
+exit();

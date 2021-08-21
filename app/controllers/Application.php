@@ -94,8 +94,8 @@ class Application {
         $footer  = $this->config->footer !== null ? $this->request->getFooter(APP_ROOT . $this->config->footer) : "Footer";
         $content = $this->request->getContent(APP_ROOT . $this->request->slashPadding($view), $data);
         $route   = $this->request->absRoute();
-        $cssFile = $this->request->parser($route, "css");
-        $jsFile  = $this->request->parser($route, "js");
+        $cssFile = $this->request->parser($route, "styles");
+        $jsFile  = $this->request->parser($route, "scripts");
 
         $origin  = ["%LINK%", "%TITLE%", "%CONTENT%", "%FOOTER%", "%SCRIPT%"];
         $replace = [$cssFile, ucfirst($route), $content, $footer, $jsFile];

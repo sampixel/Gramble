@@ -91,17 +91,22 @@ class Request {
      */
     public function parser($file, $dir) {
         $path = $file;
+        if ($dir === "styles") {
+            $ext = "css";
+        } elseif ($dir === "scripts") {
+            $ext = "js";
+        }
         $mainScan = scandir(APP_ROOT . "/public/assets/$dir", 2);
         foreach ($mainScan as $main) {
             if (!is_dir(APP_ROOT . "/public/assets/$dir/$main") && ($main !== "." || $main !== "..")) {
-                if ($main === "$file.$dir") {
+                if ($main === "$file.$ext") {
                     break;
                 }
             } else {
                 $subScan = scandir(APP_ROOT . "/public/assets/$dir/$main", 2);
                 foreach ($subScan as $sub) {
                     if (!is_dir(APP_ROOT . "/public/assets/$dir/$main/$sub") && ($sub !== "." || $sub !== "..")) {
-                        if ($sub === "$file.$dir") {
+                        if ($sub === "$file.$ext") {
                             $path = "$main/$file";
                             break;
                         }
@@ -109,7 +114,7 @@ class Request {
                         $deepScan = scandir(APP_ROOT . "/public/assets/$dir/$main/$sub", 2);
                         foreach ($deepScan as $deep) {
                             if (!is_dir(APP_ROOT . "/public/assets/$dir/$main/$sub/$deep") && ($deep !== "." || $deep !== "..")) {
-                                if ($deep === "$file.$dir") {
+                                if ($deep === "$file.$ext") {
                                     $path = "$main/$sub/$file";
                                     break;
                                 }

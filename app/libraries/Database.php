@@ -36,8 +36,48 @@ class Database {
          * Setting attributes to PDO connection
          * @link https://www.php.net/manual/en/pdo.setattribute.php
          */
-        //$this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING);
         $this->pdo->setAttribute(\PDO::ATTR_PERSISTENT, \PDO::CASE_LOWER);
+    }
+
+    /**
+     * Select all from the given table
+     * 
+     * @param  string $column The column
+     * @param  string $table  The table
+     * 
+     * @return string $sql    The sql command
+     */
+    public function select($column, $table) {
+        $sql = "SELECT $column FROM $table";
+
+        return $sql;
+    }
+
+    /**
+     * Where condition for sql
+     * 
+     * @param  string $cond1 The first condition
+     * @param  string $cond2 The second condition
+     * 
+     * @return string $sql   The sql command
+     */
+    public function where($cond1, $cond2) {
+        $sql = "WHERE $cond1=$cond2";
+
+        return $sql;
+    }
+
+    /**
+     * Applies all migrations so the application will
+     * be aligned to its most recent version
+     */
+    public function applyMigrations() {
+        $this->createMigrationsTable();
+        $appliedMigrations = $this->getAppliedMigrations();
+        $migrations = scandir(APP_ROOT . "/app/migrations", 2);
+
+        var_dump($migrations);
+        var_dump($appliedMigrations);
     }
 
     /**
@@ -53,6 +93,33 @@ class Database {
         $sql .= ");";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
+    }
+
+    /**
+     * Creates a Migration table to store all migrations file
+     */
+    public function createMigrationsTable() {
+        $sql = "CREATE TABLE IF NOT EXISTS migrations (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    migration VARCHAR(255) NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=INNODB;";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+    }
+
+    /**
+     * Get already applied migrations file containing sql command
+     * 
+     * @return array The array containing the statement's result
+     */
+    public function getAppliedMigrations() {
+        $sql = $this->select("migration", "migrations");
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+
+        //return $stmt->fetchAll(\PDO::FETCH_COLUMN);
+        return $stmt->fetchAll();
     }
 
 }
