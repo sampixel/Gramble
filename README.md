@@ -4,6 +4,40 @@
 This documentation is for educational only purpose.\
 The way others frameworks work and other similar concepts are mandatory to know if you want to understand what they do in the background.
 
+## Tree
+
+```bash
+├── app
+│   ├── controllers
+│   │   ├── Application.php
+│   │   ├── Request.php
+│   │   ├── Response.php
+│   │   └── Router.php
+│   ├── libraries
+│   │   ├── Config.php
+│   │   └── Database.php
+│   ├── migrations
+│   ├── models
+│   └── views
+│       ├── base.html
+│       └── error.html
+├── bin
+│   └── gramble
+├── package
+│   ├── autoloader.php
+│   └── migrations.php
+├── public
+│   ├── assets
+│   │   ├── images
+│   │   ├── scripts
+│   │   └── styles
+│   └── index.php
+└── src
+    ├── controllers
+    ├── models
+    └── views
+```
+
 ## Instructions
 
 ### Run the php's local web server
@@ -145,8 +179,8 @@ Let's take a look at this view:
 ```
 
 Notice the words surrounded by the `%` symbol, these will be replaced with the respective values:
-- `%LINK%` and `%SCRIPT%` will be replaced with the absolute route name, this means that if the `/user/profile/settings` route is requested, only the `settings` route name should be taken, so you should create a new file for both css and js with the previous route name\
-**NOTE**: If the given route name is located inside a sub directory, Gramble will execute a parsing function inside the `css` and `js` folder to find this one and eventually will return the correct path, just be aware to not create multiple files with the same name
+- `%LINK%` and `%SCRIPT%` will be replaced with the relative route name, this means that if the `/user/profile/settings` route is requested, only `settings` will be taken, so you should create a new file for both css and js with the previous route name\
+**NOTE**: If the given route name is located inside a sub directory, Gramble will execute a parsing function inside the `styles` and `scripts` folders to find this one and eventually will return the correct path, just be aware to not create multiple files with the same name
 - `%TITLE%` will be replaced with the absolute route name as well, but with the first letter in uppercase
 - `%CONTENT%` will be replaced with the rendered view that you passed in using `$app->render()` function, to be clear the content of the previous **src/views/main.php** file
 - `%FOOTER%` will be replaced eventually with the view given in the `config` class

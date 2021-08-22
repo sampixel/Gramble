@@ -40,7 +40,7 @@ class Database {
     }
 
     /**
-     * Select all from the given table
+     * Selects the given column from the given table
      * 
      * @param  string $column The column
      * @param  string $table  The table
@@ -49,6 +49,19 @@ class Database {
      */
     public function select($column, $table) {
         $sql = "SELECT $column FROM $table";
+
+        return $sql;
+    }
+
+    /**
+     * Selects all from the given table
+     * 
+     * @param  string $table The table
+     * 
+     * @return string $sql   The sql command
+     */
+    public function selectAll($table) {
+        $sql = "SELECT * FROM $table";
 
         return $sql;
     }

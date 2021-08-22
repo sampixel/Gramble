@@ -90,10 +90,10 @@ class Application {
      * @param array  $data The array data
      */
     public function render($view, $data) {
-        $base    = $this->request->getBase(APP_ROOT . ($data["layout"] ? $this->request->slashPadding($data["layout"]) : $this->config->base));
+        $base    = $this->request->getBase(APP_ROOT . (!empty($data["layout"]) ? $this->request->slashPadding($data["layout"]) : $this->config->base));
         $footer  = $this->config->footer !== null ? $this->request->getFooter(APP_ROOT . $this->config->footer) : "Footer";
         $content = $this->request->getContent(APP_ROOT . $this->request->slashPadding($view), $data);
-        $route   = $this->request->absRoute();
+        $route   = $this->request->relRoute();
         $cssFile = $this->request->parser($route, "styles");
         $jsFile  = $this->request->parser($route, "scripts");
 

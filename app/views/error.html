@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico"/>
+    <link href="https://fonts.googleapis.com/css?family=Sofia" rel="stylesheet"/>
+    <title>Gramble 404 - Page not found</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2&display=swap');
+
+        body#main-body, html {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-family: 'Baloo Da 2', cursive;
+        }
+
+        header.main-header {
+            height: 50vh;
+            background-color: #14161a;
+        }
+
+        div.main-div {
+            position: relative;
+            top: -26em;
+        }
+
+        span.main-div-title {
+            color: white;
+            font-family: 'Anton', sans-serif;
+            font-size: 25em;
+            font-weight: bold;
+            position: relative;
+        }
+
+        div.main-div-content {
+            display: grid;
+        }
+
+        span.main-div-content-desc {
+            font-size: 30px;
+            font-weight: bold;
+            color: #14161a;
+            position: relative;
+            top: -5em;
+        }
+
+        button.main-div-content-button {
+            transition: all 0.3s;
+            background-color: #0d08ff;
+            color: white;
+            padding: 5px 8px;
+            border: 1px solid #0d08ff;
+            border-radius: 5px;
+            position: relative;
+            top: -11em;
+            margin: auto;
+        }
+
+        button.main-div-content-button:hover {
+            background-color: white;
+        }
+
+        a.main-div-content-anchor {
+            color: white;
+            font-size: 15px;
+            font-family: 'Baloo Da 2', cursive;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        a.main-div-content-anchor:hover {
+            color: #0d08ff;
+        }
+
+        @media screen and (max-width: 600px) {
+            span.main-div-title {
+                font-size: 22em;
+                top: 50px;
+            }
+
+            span.main-div-content-desc {
+                font-size: 25px;
+                top: -4em;
+            }
+
+            button.main-div-content-button {
+                top: -7em;
+            }
+        }
+
+        @media screen and (max-width: 530px) {
+            span.main-div-title {
+                font-size: 20em;
+                top: 80px;
+            }
+
+            span.main-div-content-desc {
+                font-size: 20px;
+                top: -3em;
+            }
+
+            button.main-div-content-button {
+                top: -4em;
+            }
+        }
+
+        @media screen and (max-width: 470px) {
+            span.main-div-title {
+                font-size: 18em;
+                top: 110px;
+            }
+
+            span.main-div-content-desc {
+                font-size: 18px;
+                top: 0;
+            }
+
+            button.main-div-content-button {
+                top: 1em;
+            }
+        }
+
+        @media screen and (max-width: 430px) {
+            span.main-div-title {
+                font-size: 15em;
+                top: 160px;
+            }
+
+            span.main-div-content-desc {
+                font-size: 16px;
+                top: 4em;
+            }
+
+            button.main-div-content-button {
+                top: 6em;
+            }
+        }
+
+        @media screen and (max-width: 350px) {
+            span.main-div-title {
+                font-size: 12em;
+                top: 205px;
+            }
+
+            span.main-div-content-desc {
+                font-size: 16px;
+                top: 8em;
+            }
+
+            button.main-div-content-button {
+                top: 11em;
+            }
+        }
+    </style>
+</head>
+<body id="main-body">
+    <header class="main-header"></header>
+    <div class="main-div">
+        <span class="main-div-title js-handle-error"></span>
+        <div class="main-div-content">
+            <span class="main-div-content-desc">The page requested was not found ..</span>
+            <button class="main-div-content-button">
+                <a class="main-div-content-anchor" href="/">Go Home</a>
+            </button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        const jsHandleError = document.querySelector("span.js-handle-error");
+
+        /* Add counter effect to 404 title */
+        var jsHandleCounter = 0;
+        var jsHandleTimer   = setInterval(function() {
+            jsHandleError.innerHTML = Math.floor(Math.random() * (999 - 100) - 100);
+            if (jsHandleCounter > 8) {
+                jsHandleError.innerHTML = 404;
+                clearInterval(jsHandleTimer);
+            }
+            jsHandleCounter++;
+        }, 70);
+    </script>
+</body>
+</html>

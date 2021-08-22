@@ -2,6 +2,7 @@
 <?php
 
 $DIR = getcwd();
+echo $DIR;
 
 /** Check first argument */
 if (empty($argv[1])) {

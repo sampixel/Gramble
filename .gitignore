@@ -1,9 +1,2 @@
 .vscode
 gramble.odg
-app/views/*
-public/assets/styles/*
-public/assets/images/*
-public/assets/scripts/*
-src/controllers/*
-src/models/*
-src/views/*

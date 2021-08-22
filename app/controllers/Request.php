@@ -85,35 +85,31 @@ class Request {
      * Checks if the route name is available inside folders, then returns the relative path
      * 
      * @param  string $file The given filename to match
-     * @param  string $dir  The given directory name
+     * @param  string $root The given directory name
      * 
      * @return string $path The relative pathname
      */
-    public function parser($file, $dir) {
+    public function parser($file, $root) {
         $path = $file;
-        if ($dir === "styles") {
-            $ext = "css";
-        } elseif ($dir === "scripts") {
-            $ext = "js";
-        }
-        $mainScan = scandir(APP_ROOT . "/public/assets/$dir", 2);
+        $ext = $root === "styles" ? "css" : "js";
+        $mainScan = array_diff(scandir(APP_ROOT . "/public/assets/$root"), [".", ".."]);
         foreach ($mainScan as $main) {
-            if (!is_dir(APP_ROOT . "/public/assets/$dir/$main") && ($main !== "." || $main !== "..")) {
+            if (!is_dir(APP_ROOT . "/public/assets/$root/$main")) {
                 if ($main === "$file.$ext") {
                     break;
                 }
             } else {
-                $subScan = scandir(APP_ROOT . "/public/assets/$dir/$main", 2);
+                $subScan = array_diff(scandir(APP_ROOT . "/public/assets/$root/$main"), [".", ".."]);
                 foreach ($subScan as $sub) {
-                    if (!is_dir(APP_ROOT . "/public/assets/$dir/$main/$sub") && ($sub !== "." || $sub !== "..")) {
+                    if (!is_dir(APP_ROOT . "/public/assets/$root/$main/$sub")) {
                         if ($sub === "$file.$ext") {
                             $path = "$main/$file";
                             break;
                         }
                     } else {
-                        $deepScan = scandir(APP_ROOT . "/public/assets/$dir/$main/$sub", 2);
+                        $deepScan = array_diff(scandir(APP_ROOT . "/public/assets/$root/$main/$sub"), [".", ".."]);
                         foreach ($deepScan as $deep) {
-                            if (!is_dir(APP_ROOT . "/public/assets/$dir/$main/$sub/$deep") && ($deep !== "." || $deep !== "..")) {
+                            if (!is_dir(APP_ROOT . "/public/assets/$root/$main/$sub/$deep")) {
                                 if ($deep === "$file.$ext") {
                                     $path = "$main/$sub/$file";
                                     break;
@@ -129,11 +125,11 @@ class Request {
     }
 
     /**
-     * Returns the absolute route name without slashes
+     * Returns the relative route name without slashes
      * 
      * @return string $routeName The current route name
      */
-    public function absRoute() {
+    public function relRoute() {
         $explodedURL = explode("/", $_SERVER["REQUEST_URI"]);
         if (empty($explodedURL[count($explodedURL)-1])) {
             unset($explodedURL[count($explodedURL)-1]);
