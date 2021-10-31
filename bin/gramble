@@ -1,30 +1,30 @@
 #!/usr/bin/env php
 <?php
 
-$DIR = getcwd();
-echo $DIR;
+$DIR = dirname(__DIR__);
 
-/** Check first argument */
+/** Checks first argument */
 if (empty($argv[1])) {
     echo "Missing argument [?], type \"list\" to see all commands\n";
-} elseif (!in_array($argv[1], ["list", "new", "run", "stop"])) {
+} elseif (!in_array($argv[1], ["list", "new", "run", "migrate"])) {
     echo "Invalid argument \"$argv[1]\", type \"list\" to see all commands\n";
 } else {
 
     /** Shows command list */
     if ($argv[1] === "list") {
         echo "Welcome to Gramble v0.1.0\n";
-        echo "Usage: gramble <action> [arguments]\n\n";
-        echo "  list\tshows all available commands\n";
-        echo "  new\tcreates a new project skeleton\n";
-        echo "  run\truns a local web server at port 9091\n";
-        echo "  stop\tstops the local web server execution\n\n";
+        echo "Usage: gramble <action> [arguments]\n";
+        echo "Docs: https://github.com/sampixel/gramble/blob/master/README.md\n\n";
+        echo "  list\t    _shows all available commands\n";
+        echo "  new\t    _creates a new project skeleton\n";
+        echo "  run\t    _runs a local web server\n";
+        echo "  migrate   _runs all migrations file\n\n";
 
     /** Creates a new project skeleton */
     } elseif ($argv[1] === "new") {
         if (empty($argv[2])) {
             echo "Missing argument [project_name]\n";
-        } else {
+        } else {    // include $DIR ??
             mkdir("$DIR/$argv[2]", 0766);
             mkdir("$DIR/$argv[2]/app", 0766);
             mkdir("$DIR/$argv[2]/app/controllers", 0766);
@@ -50,6 +50,7 @@ if (empty($argv[1])) {
             file_put_contents("$DIR/$argv[2]/app/controllers/Router.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/controllers/Router.php"));
             file_put_contents("$DIR/$argv[2]/app/libraries/Config.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/libraries/Config.php"));
             file_put_contents("$DIR/$argv[2]/app/libraries/Database.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/libraries/Database.php"));
+            file_put_contents("$DIR/$argv[2]/app/libraries/Parser.php", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/libraries/Parser.php"));
             file_put_contents("$DIR/$argv[2]/app/views/base.html", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/views/base.html"));
             file_put_contents("$DIR/$argv[2]/app/views/error.html", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/app/views/error.html"));
             file_put_contents("$DIR/$argv[2]/bin/gramble", file_get_contents("https://raw.githubusercontent.com/sampixel/gramble/master/bin/gramble"));
@@ -60,12 +61,16 @@ if (empty($argv[1])) {
             echo "New project \"$argv[2]\" created succesfully\n";
         }
 
+    /** Runs the server */
     } elseif ($argv[1] === "run") {
-        shell_exec("nohup php -S 127.0.0.1:9091 -t public/ > phpd-log 2>&1 & PHP_SERVER_PDI=$!");
-        echo "Server started at http://127.0.0.1:9091\n";
-    } elseif ($argv[1] === "stop") {
-        shell_exec("kill -3 PHP_SERVER_PID");
-        echo "Server stopped succesfully\n";
+        $port = $argv[2] ?? 9091;
+        shell_exec("php -S 0.0.0.0:$port -t public/");
+
+    /** Runs migrations file */
+    } elseif ($argv[1] === "migrate") {
+        $dirname = dirname(__DIR__);
+        shell_exec("php $dirname/package/migrations.php");
+
     }
 
 }

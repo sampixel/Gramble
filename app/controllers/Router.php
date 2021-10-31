@@ -27,7 +27,6 @@ class Router {
      * Checks the route name and includes slash whenever it is missed
      * 
      * @param  string $route The given route
-     * 
      * @return string $fullPath The full route name
      */
     public function checkRoute($route) {
@@ -42,7 +41,7 @@ class Router {
     }
 
     /**
-     * Defines a get method in the given route
+     * Defines a get method for the given route
      * 
      * @param string    $route      The given route
      * @param callback  $callback   The route's callback
@@ -52,7 +51,7 @@ class Router {
     }
 
     /**
-     * Defines a post method in the given route
+     * Defines a post method for the given route
      * 
      * @param string    $route    The given route
      * @param callback  $callback The route's callback
@@ -66,7 +65,6 @@ class Router {
      * 
      * @param  string $method The requested method
      * @param  string $route  The requested route
-     * 
      * @return array The array containing routes
      */
     public function callback($method, $route) {

@@ -26,3 +26,22 @@ if (jsSidebarButton) {
 
     });
 }
+
+/** Check for double ids and classes */
+const ids = [];
+document.body.querySelectorAll("*").forEach(el => {
+    if (el.id) {
+        let idArr = el.id.split(" ");
+        idArr.forEach(id => ids.push(id));
+    }
+});
+
+/** Class Loop Control */
+for (let k = 0; k < ids.length; k++) {
+    for (let n = 0; n < ids.length; n++) {
+        if (n !== k && ids[k] === ids[n]) {
+            console.error(`Double inner id stack: ${ids[k]}`);
+        }
+    }
+}
+

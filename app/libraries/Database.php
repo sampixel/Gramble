@@ -8,7 +8,6 @@
 
 namespace app\libraries;
 
-use \PDO;
 use app\libraries\Config;
 
 /**
@@ -44,7 +43,6 @@ class Database {
      * 
      * @param  string $column The column
      * @param  string $table  The table
-     * 
      * @return string $sql    The sql command
      */
     public function select($column, $table) {
@@ -57,7 +55,6 @@ class Database {
      * Selects all from the given table
      * 
      * @param  string $table The table
-     * 
      * @return string $sql   The sql command
      */
     public function selectAll($table) {
@@ -71,11 +68,10 @@ class Database {
      * 
      * @param  string $cond1 The first condition
      * @param  string $cond2 The second condition
-     * 
      * @return string $sql   The sql command
      */
     public function where($cond1, $cond2) {
-        $sql = "WHERE $cond1=$cond2";
+        $sql = "WHERE '$cond1'='$cond2'";
 
         return $sql;
     }

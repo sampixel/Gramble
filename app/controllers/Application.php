@@ -15,6 +15,7 @@ use app\controllers\Request;
 use app\controllers\Response;
 use app\libraries\Database;
 use app\libraries\Config;
+use app\libraries\Parser;
 
 /**
  * Class Application
@@ -31,16 +32,30 @@ use app\libraries\Config;
  */
 class Application {
 
-    /** @var object $router */
+    /**
+     * @var object $router
+     */
     public Router $router;
-    /** @var object $request */
+    /**
+     * @var object $request
+     */
     public Request $request;
-    /** @var object $response */
+    /**
+     * @var object $response
+     */
     public Response $response;
-    /** @var object $database */
+    /**
+     * @var object $database
+     */
     public Database $database;
-    /** @var object $config */
+    /**
+     * @var object $config
+     */
     public Config $config;
+    /**
+     * @var object $parser
+     */
+    public Parser $parser;
 
     public function __construct() {
         $this->router   = new Router;
@@ -48,6 +63,7 @@ class Application {
         $this->request  = new Request;
         $this->database = new Database;
         $this->config   = new Config;
+        $this->parser   = new Parser;
     }
 
     /**
@@ -94,8 +110,9 @@ class Application {
         $footer  = $this->config->footer !== null ? $this->request->getFooter(APP_ROOT . $this->config->footer) : "Footer";
         $content = $this->request->getContent(APP_ROOT . $this->request->slashPadding($view), $data);
         $route   = $this->request->relRoute();
-        $cssFile = $this->request->parser($route, "styles");
-        $jsFile  = $this->request->parser($route, "scripts");
+
+        $cssFile = $this->parser->findFile($route, dirname(dirname(__DIR__)) . "/public/assets/css");
+        $jsFile  = $this->parser->findFile($route, dirname(dirname(__DIR__)) . "/public/assets/js");
 
         $origin  = ["%LINK%", "%TITLE%", "%CONTENT%", "%FOOTER%", "%SCRIPT%"];
         $replace = [$cssFile, ucfirst($route), $content, $footer, $jsFile];

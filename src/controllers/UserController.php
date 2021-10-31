@@ -6,13 +6,12 @@ use app\controllers\Application;
 
 /**
  * Class UserController
- * 
- * @package src\controllers
- * @license https://mit-license.org/ MIT License
- * @author  Samuel Reka <rekasamuel0@gmail.com>
  */
 class UserController extends Application {
 
+    /**
+     * @Route("/", name="_user_info")
+     */
     public function getUserInfo() {
         //$arrData["layout"] = "src/views/template/layout.html";
         $arrData["userinfo"] = [
@@ -23,9 +22,9 @@ class UserController extends Application {
         ];
 
         $this->database->createTable([
-            "label" => "mvc_details",
+            "label"   => "mvc_details",
             "columns" => [
-                "id" => "INT PRIMARY KEY AUTO_INCREMENT,",
+                "id"   => "INT PRIMARY KEY AUTO_INCREMENT,",
                 "name" => "VARCHAR(255) NOT NULL,",
                 "date" => "TIMESTAMP NOT NULL"
             ]

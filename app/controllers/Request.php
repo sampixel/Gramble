@@ -34,7 +34,7 @@ class Request {
     public function route() {
         $route = $_SERVER["REQUEST_URI"] ?? "/";
         $pos = strpos($route, "?");
-        $path = ($pos !== false ? substr($route, 0, $pos) : $route);
+        $route = ($pos !== false ? substr($route, 0, $pos) : $route);
         $route = ($route !== "/" && $route[strlen($route)-1] === "/" ? substr_replace($route, "", -1) : $route);
 
         return $route;
@@ -57,7 +57,7 @@ class Request {
     public function get() {
         $body = [];
         if ($this->method() === "get") {
-            foreach ($_GET as $key => $value) {
+            foreach ($_GET as $key => $_) {
                 $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             }
         }
@@ -73,55 +73,12 @@ class Request {
     public function post() {
         $body = [];
         if ($this->method() === "post") {
-            foreach ($_POST as $key => $value) {
+            foreach ($_POST as $key => $_) {
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             }
         }
 
         return $body;
-    }
-
-    /**
-     * Checks if the route name is available inside folders, then returns the relative path
-     * 
-     * @param  string $file The given filename to match
-     * @param  string $root The given directory name
-     * 
-     * @return string $path The relative pathname
-     */
-    public function parser($file, $root) {
-        $path = $file;
-        $ext = $root === "styles" ? "css" : "js";
-        $mainScan = array_diff(scandir(APP_ROOT . "/public/assets/$root"), [".", ".."]);
-        foreach ($mainScan as $main) {
-            if (!is_dir(APP_ROOT . "/public/assets/$root/$main")) {
-                if ($main === "$file.$ext") {
-                    break;
-                }
-            } else {
-                $subScan = array_diff(scandir(APP_ROOT . "/public/assets/$root/$main"), [".", ".."]);
-                foreach ($subScan as $sub) {
-                    if (!is_dir(APP_ROOT . "/public/assets/$root/$main/$sub")) {
-                        if ($sub === "$file.$ext") {
-                            $path = "$main/$file";
-                            break;
-                        }
-                    } else {
-                        $deepScan = array_diff(scandir(APP_ROOT . "/public/assets/$root/$main/$sub"), [".", ".."]);
-                        foreach ($deepScan as $deep) {
-                            if (!is_dir(APP_ROOT . "/public/assets/$root/$main/$sub/$deep")) {
-                                if ($deep === "$file.$ext") {
-                                    $path = "$main/$sub/$file";
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return $path;
     }
 
     /**
@@ -143,7 +100,6 @@ class Request {
      * Returns the base layout as html text
      * 
      * @param  string $basePath The base path
-     * 
      * @return string $baseHtml  The buffer layout
      */
     public function getBase($basePath) {
@@ -159,7 +115,6 @@ class Request {
      * 
      * @param  string $viewPath The view path
      * @param  array  $arrData  The array containing data
-     * 
      * @return string $viewHtml The view as html
      */
     public function getContent($viewPath, $arrData) {
@@ -177,7 +132,6 @@ class Request {
      * Returns the footer content as html text
      * 
      * @param  string $footerPath The footer path
-     * 
      * @return string $footerHtml The footer as html
      */
     public function getFooter($footerPath) {
@@ -204,7 +158,6 @@ class Request {
      * Returns the given path with slash at beginning, if it's missed
      * 
      * @param  string $path    The given path to add slash to
-     * 
      * @return string $newPath The path if slash padding
      */
     public function slashPadding($path) {

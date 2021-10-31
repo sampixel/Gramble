@@ -4,7 +4,7 @@
 This documentation is for educational only purpose.\
 The way others frameworks work and other similar concepts are mandatory to know if you want to understand what they do in the background.
 
-## Tree
+## Tree Structure
 
 ```bash
 ├── app
@@ -15,12 +15,14 @@ The way others frameworks work and other similar concepts are mandatory to know 
 │   │   └── Router.php
 │   ├── libraries
 │   │   ├── Config.php
-│   │   └── Database.php
+│   │   ├── Database.php
+│   │   └── Parser.php
 │   ├── migrations
 │   ├── models
 │   └── views
 │       ├── base.html
-│       └── error.html
+│       ├── error.html
+│       └── footer.html
 ├── bin
 │   └── gramble
 ├── package
@@ -28,21 +30,55 @@ The way others frameworks work and other similar concepts are mandatory to know 
 │   └── migrations.php
 ├── public
 │   ├── assets
+│   │   ├── css
 │   │   ├── images
-│   │   ├── scripts
-│   │   └── styles
+│   │   └── js
+│   ├── favicon.png
 │   └── index.php
+├── README.md
 └── src
     ├── controllers
     ├── models
     └── views
+        └── template
 ```
 
 ## Instructions
 
+### Gramble Package Manager
+Throughout this documentation, in some places, you will need to use the `gramble package managager` and to avoid running into problems i suggest you to check first its availability.\
+Open your terminal and from inside your project directory, type:
+
+```bash
+./bin/gramble
+```
+
+If no output is showned, then you probably need to make it executable:
+
+```bash
+chmod +x ./bin/gramble
+```
+
+Done!
+
+---
+
 ### Run the php's local web server
-To launch the web server run `php -S localhost:5000 -t public/` from inside your project directory.\
-Then open your favorite browser and type the address on the url field.
+Gramble comes in with a command that allows you to run in **foreground** a local web server, to accomplish this you can simply run:
+
+```bash
+./bin/gramble run
+```
+
+The default port is `9091`, but you can define a different one by adding the number port after the previous declaration, like so:
+
+```bash
+./bin/gramble run 5000
+```
+
+Now you can visit http://localhost:5000 to see your application running.
+
+> If you want to stop the server, you can launch `Ctrl+c` with your keyboard.
 
 ---
 
@@ -280,7 +316,7 @@ For more reference see [Connections and Connection Managment](https://www.php.ne
 
 ### Enable configuration
 To enable pdo database support you must uncomment some lines from your local `php.ini` file.\
-First off, if you have multiple versions of php, you need to find the actual configuration file that your system is actually using.\
+First off, if you have multiple versions of php, you need to find the actual configuration file that your system is actually using.
 
 From a Linux machine you can type:
 
@@ -297,7 +333,7 @@ Additional .ini files parsed:      /etc/php/conf.d/xdebug.ini
 ```
 
 The file you need to make changes is stored under `Loaded Configuration File`.\
-Once you've found this file, open it and uncomment the following lines by toggling `;` semicolons:
+Once you've found this file, open it and uncomment the following line by toggling `;` semicolons:
 
 ```ini
 extension=pdo_mysql
@@ -344,12 +380,12 @@ For better readability the main conventions syntax to use inside views file are 
     - `switch` statements
     ```php
     <?php switch ($variable): ?>
-    <?php case true: ?>
-        <span>The given variable is true</span><br>
-    <?php case false: ?>
-        <span>The given variable is false</span><br>
-    <?php default: ?>
-        <span>The given variable is <?= gettype($variable) ?></span><br>
+        <?php case true: ?>
+            <span>The given variable is true</span><br>
+        <?php case false: ?>
+            <span>The given variable is false</span><br>
+        <?php default: ?>
+            <span>The given variable is <?= gettype($variable) ?></span><br>
     <?php endswitch ?>
     ```
 
@@ -374,4 +410,4 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     - enable passing data from controller to view
     - enable templates for `base`, `footer`, `error` views
     - enable custom `layout` extension instead of `base`
-    - support database connection
+    - support database pdo connection

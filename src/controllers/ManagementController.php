@@ -19,7 +19,7 @@ class ManagementController extends Application {
             "lname" => "Ueeeeee"
         ];
 
-        return json_encode($jsonData);
+        echo json_encode($jsonData);
     }
 
 }
