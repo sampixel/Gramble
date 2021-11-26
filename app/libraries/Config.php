@@ -30,7 +30,7 @@ class Config {
      * @var string $footer
      * The footer view layout
      */
-    public string $footer = "/app/views/footer.html";
+    //public string $footer = "/app/views/footer.html";
     /**
      * @var string $error
      * The error view layout

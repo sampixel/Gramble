@@ -27,22 +27,21 @@ namespace app\controllers;
 class Request {
 
     /**
-     * Gets the effective absolute route name without including queries or slashes
-     * 
+     * Gets the effective absolute route name without including queries
+     * and executes a right trim to remove an eventual slash character.
      * @return string $route The effective path name
      */
     public function route() {
         $route = $_SERVER["REQUEST_URI"] ?? "/";
         $pos = strpos($route, "?");
-        $route = ($pos !== false ? substr($route, 0, $pos) : $route);
-        $route = ($route !== "/" && $route[strlen($route)-1] === "/" ? substr_replace($route, "", -1) : $route);
+        $route = $pos !== false ? substr($route, 0, $pos) : $route;
+        $route = $route !== "/" && $route[strlen($route)-1] === "/" ? \rtrim($route, "/") : $route;
 
         return $route;
     }
 
     /**
-     * Gets the method for the actual route name
-     * 
+     * Gets the method for the actual route name.
      * @return string The actual method used
      */
     public function method() {
@@ -50,8 +49,7 @@ class Request {
     }
 
     /**
-     * Sanitize data for get method
-     * 
+     * Sanitize data for get method.
      * @return array $body The array containing get sanitized data
      */
     public function get() {
@@ -66,8 +64,7 @@ class Request {
     }
 
     /**
-     * Sanitize data for post method
-     * 
+     * Sanitize data for post method.
      * @return array $body The array containing post sanitized data
      */
     public function post() {
@@ -82,8 +79,7 @@ class Request {
     }
 
     /**
-     * Returns the relative route name without slashes
-     * 
+     * Returns the relative route name without slashes.
      * @return string $routeName The current route name
      */
     public function relRoute() {
@@ -97,8 +93,7 @@ class Request {
     }
 
     /**
-     * Returns the base layout as html text
-     * 
+     * Returns the base layout as html text.
      * @param  string $basePath The base path
      * @return string $baseHtml  The buffer layout
      */

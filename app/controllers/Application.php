@@ -25,9 +25,10 @@ use app\libraries\Parser;
  * @param object $response
  * @param object $database
  * @param object $config
+ * @param object $parser
  * 
- * - methodClass()
  * - run()
+ * - resolve()
  * - render()
  */
 class Application {
@@ -58,21 +59,35 @@ class Application {
     public Parser $parser;
 
     public function __construct() {
-        $this->router   = new Router;
-        $this->response = new Response;
-        $this->request  = new Request;
-        $this->database = new Database;
-        $this->config   = new Config;
-        $this->parser   = new Parser;
+        $this->router   = new Router();
+        $this->response = new Response();
+        $this->request  = new Request();
+        $this->database = new Database();
+        $this->config   = new Config();
+        $this->parser   = new Parser();
     }
 
     /**
-     * Runs the class method if this one exists in class object
-     * 
+     * Gets the given method, route and then render its view
+     * and if no view was found, a 404 page will be throwned.
+     */
+    public function run() {
+        $route  = $this->request->route();
+        $method = $this->request->method();
+        $params = $this->router->callback($method, $route);
+        $callback = $this->resolve($params[0], $params[1]);
+        if ($callback === false) {
+            $this->request->getError($this->response, $this->config);
+        }
+    }
+
+    /**
+     * Runs the class method if this one exists in class object.
      * @param object $className  The class to examine
      * @param string $methodName The method to match
+     * @return boolean
      */
-    public function methodClass($className, $methodName) {
+    public function resolve($className, $methodName) {
         if ($className !== null) {
             $classMethods = get_class_methods($className);
             foreach ($classMethods as $key) {
@@ -83,31 +98,18 @@ class Application {
                 }
             }
         }
+
+        return false;
     }
 
     /**
-     * Gets the given method, route and then render its view
-     * and if no view was found, a 404 page will be throwned
-     */
-    public function run() {
-        $route  = $this->request->route();
-        $method = $this->request->method();
-        $params = $this->router->callback($method, $route);
-        $callback = $params !== null ? $this->methodClass($params[0], $params[1]) : false;
-        if ($callback === false) {
-            $this->request->getError($this->response, $this->config);
-        }
-    }
-
-    /**
-     * This method replaces the given view in the base file and displays the final view
-     * 
+     * This method replaces the given view in the base file and displays the final view.
      * @param string $view The view path
      * @param array  $data The array data
      */
     public function render($view, $data) {
-        $base    = $this->request->getBase(APP_ROOT . (!empty($data["layout"]) ? $this->request->slashPadding($data["layout"]) : $this->config->base));
-        $footer  = $this->config->footer !== null ? $this->request->getFooter(APP_ROOT . $this->config->footer) : "Footer";
+        $base = $this->request->getBase(APP_ROOT . (!empty($data["layout"]) ? $this->request->slashPadding($data["layout"]) : $this->config->base));
+        $footer = $this->config->footer !== null ? $this->request->getFooter(APP_ROOT . $this->config->footer) : null;
         $content = $this->request->getContent(APP_ROOT . $this->request->slashPadding($view), $data);
         $route   = $this->request->relRoute();
 

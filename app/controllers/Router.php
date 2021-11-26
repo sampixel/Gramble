@@ -61,8 +61,7 @@ class Router {
     }
 
     /**
-     * Returns controller-method pairs as string
-     * 
+     * Returns controller-method pairs as string.
      * @param  string $method The requested method
      * @param  string $route  The requested route
      * @return array The array containing routes
