@@ -34,29 +34,29 @@ use app\libraries\Parser;
 class Application {
 
     /**
-     * @var object $router
+     * @var Route $router
      */
-    public Router $router;
+    public $router;
     /**
-     * @var object $request
+     * @var Request $request
      */
-    public Request $request;
+    public $request;
     /**
-     * @var object $response
+     * @var Response $response
      */
-    public Response $response;
+    public $response;
     /**
-     * @var object $database
+     * @var Database $database
      */
-    public Database $database;
+    public $database;
     /**
-     * @var object $config
+     * @var Config $config
      */
-    public Config $config;
+    public $config;
     /**
-     * @var object $parser
+     * @var Parser $parser
      */
-    public Parser $parser;
+    public $parser;
 
     public function __construct() {
         $this->router   = new Router();
@@ -75,7 +75,7 @@ class Application {
         $route  = $this->request->route();
         $method = $this->request->method();
         $params = $this->router->callback($method, $route);
-        $callback = $this->resolve($params[0], $params[1]);
+        $callback = $params !== null ? $this->resolve($params[0], $params[1]) : false;
         if ($callback === false) {
             $this->request->getError($this->response, $this->config);
         }
@@ -108,16 +108,16 @@ class Application {
      * @param array  $data The array data
      */
     public function render($view, $data) {
-        $base = $this->request->getBase(APP_ROOT . (!empty($data["layout"]) ? $this->request->slashPadding($data["layout"]) : $this->config->base));
+        $base = $this->request->getBase(APP_ROOT . (!empty($data["layout"]) ? $this->request->prependSlash($data["layout"]) : $this->config->base));
         $footer = $this->config->footer !== null ? $this->request->getFooter(APP_ROOT . $this->config->footer) : null;
-        $content = $this->request->getContent(APP_ROOT . $this->request->slashPadding($view), $data);
-        $route   = $this->request->relRoute();
+        $content = $this->request->getContent(APP_ROOT . $this->request->prependSlash($view), $data);
+        $route = $this->request->relativeRoute();
 
-        $cssFile = $this->parser->findFile($route, dirname(dirname(__DIR__)) . "/public/assets/css");
-        $jsFile  = $this->parser->findFile($route, dirname(dirname(__DIR__)) . "/public/assets/js");
+        $css = $this->parser->findFile($route, dirname(dirname(__DIR__)) . "/public/assets/css");
+        $js = $this->parser->findFile($route, dirname(dirname(__DIR__)) . "/public/assets/js");
 
         $origin  = ["%LINK%", "%TITLE%", "%CONTENT%", "%FOOTER%", "%SCRIPT%"];
-        $replace = [$cssFile, ucfirst($route), $content, $footer, $jsFile];
+        $replace = [$css, ucfirst($route), $content, $footer, $js];
 
         echo str_replace($origin, $replace, $base);
     }

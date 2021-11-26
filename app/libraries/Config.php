@@ -25,36 +25,36 @@ class Config {
      * @var string $base
      * The base view layout
      */
-    public string $base = "/app/views/base.html";
+    public $base = "/app/views/base.html";
     /**
      * @var string $footer
      * The footer view layout
      */
-    //public string $footer = "/app/views/footer.html";
+    public $footer = "/app/views/footer.html";
     /**
      * @var string $error
      * The error view layout
      */
-    public string $error = "/app/views/error.html";
+    public $error = "/app/views/error.html";
     /**
      * @var string $hostname
      * The host name
      */
-    public static string $hostname = "127.0.0.1";
+    public static $hostname = "127.0.0.1";
     /**
      * @var string $dbname
      * The database name
      */
-    public static string $dbname = "test";
+    public static $dbname = "test";
     /**
      * @var string $username
      * The user name
      */
-    public static string $username = "root";
+    public static $username = "root";
     /**
      * @var string $password
      * The password
      */
-    public static string $password = "123";
+    public static $password = "123";
 
 }

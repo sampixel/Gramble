@@ -82,12 +82,12 @@ class Request {
      * Returns the relative route name without slashes.
      * @return string $routeName The current route name
      */
-    public function relRoute() {
+    public function relativeRoute() {
         $explodedURL = explode("/", $_SERVER["REQUEST_URI"]);
         if (empty($explodedURL[count($explodedURL)-1])) {
             unset($explodedURL[count($explodedURL)-1]);
         }
-        $routeName = (empty($explodedURL[0]) && empty($explodedURL[1]) ? "home" : $explodedURL[count($explodedURL)-1]);
+        $routeName = empty($explodedURL[0]) && empty($explodedURL[1]) ? "home" : $explodedURL[count($explodedURL)-1];
 
         return $routeName;
     }
@@ -138,8 +138,7 @@ class Request {
     }
 
     /**
-     * Requires 404 status when route does not match
-     * 
+     * Requires 404 status when route does not match.
      * @param object $respone The Response object instance
      * @param object $config  The Config object instance
      */
@@ -150,12 +149,11 @@ class Request {
     }
 
     /**
-     * Returns the given path with slash at beginning, if it's missed
-     * 
+     * Returns the given path with slash at beginning, if it's missed.
      * @param  string $path    The given path to add slash to
      * @return string $newPath The path if slash padding
      */
-    public function slashPadding($path) {
+    public function prependSlash($path) {
         $newPath = $path;
         if (substr($path, 0, 1) !== "/") {
             $newPath = "/$path";

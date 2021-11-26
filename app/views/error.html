@@ -11,6 +11,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2&display=swap');
 
+        html {
+            display: none;
+        }
+
         body#main-body, html {
             margin: 0;
             padding: 0;
@@ -168,10 +172,10 @@
             </button>
         </div>
     </div>
-    <script type="text/javascript">
+    <script type="text/javascript" asyn>
         const jsHandleError = document.querySelector("span.js-handle-error");
 
-        /* Add counter effect to 404 title */
+        // Add counter effect to 404 title
         var jsHandleCounter = 0;
         var jsHandleTimer   = setInterval(function() {
             jsHandleError.innerHTML = Math.floor(Math.random() * (999 - 100) - 100);
@@ -181,6 +185,11 @@
             }
             jsHandleCounter++;
         }, 70);
+
+        // Add event listener to body to prevent FOUC
+        document.addEventListener("DOMContentLoaded", (e) => {
+            document.querySelector("html").style.display = "block";
+        });
     </script>
 </body>
 </html>

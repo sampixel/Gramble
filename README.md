@@ -67,13 +67,13 @@ Done!
 Gramble comes in with a command that allows you to run in **foreground** a local web server, to accomplish this you can simply run:
 
 ```bash
-./bin/gramble run
+./bin/grambleCli run
 ```
 
 The default port is `9091`, but you can define a different one by adding the number port after the previous declaration, like so:
 
 ```bash
-./bin/gramble run 5000
+./bin/grambleCli run 5000
 ```
 
 Now you can visit http://localhost:5000 to see your application running.

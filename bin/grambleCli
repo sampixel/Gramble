@@ -5,26 +5,26 @@ $DIR = dirname(__DIR__);
 
 /** Checks first argument */
 if (empty($argv[1])) {
-    echo "Missing argument [?], type \"list\" to see all commands\n";
-} elseif (!in_array($argv[1], ["list", "new", "run", "migrate"])) {
-    echo "Invalid argument \"$argv[1]\", type \"list\" to see all commands\n";
+    echo "Missing argument [?], type \"[--list][-l]\" to see all commands\n";
+} elseif (!\in_array($argv[1], ["--list", "-l", "--new", "-n", "--run", "-r", "--migrate", "-m"])) {
+    echo "Invalid argument \"$argv[1]\", type \"[--list][-l]\" to see all commands\n";
 } else {
 
     /** Shows command list */
-    if ($argv[1] === "list") {
+    if (\in_array($argv[1], ["--list", "-l"])) {
         echo "Welcome to Gramble v0.1.0\n";
-        echo "Usage: gramble <action> [arguments]\n";
-        echo "Docs: https://github.com/sampixel/gramble/blob/master/README.md\n\n";
-        echo "  list\t    _shows all available commands\n";
-        echo "  new\t    _creates a new project skeleton\n";
-        echo "  run\t    _runs a local web server\n";
-        echo "  migrate   _runs all migrations file\n\n";
+        echo "Usage: grambleCli <action> [arguments]\n";
+        echo "Docs: https://github.com/sampixel/Gramble/blob/master/README.md\n\n";
+        echo "  [--list][-l]\t    _shows all available commands\n";
+        echo "  [--new][-n]\t    _creates a new project skeleton\n";
+        echo "  [--run][-r]\t    _runs a local web server\n";
+        echo "  [--migrate][-m]   _runs all migrations file\n\n";
 
     /** Creates a new project skeleton */
-    } elseif ($argv[1] === "new") {
+    } elseif (\in_array($argv[1], ["--new", "-n"])) {
         if (empty($argv[2])) {
             echo "Missing argument [project_name]\n";
-        } else {    // include $DIR ??
+        } else {
             mkdir("$DIR/$argv[2]", 0766);
             mkdir("$DIR/$argv[2]/app", 0766);
             mkdir("$DIR/$argv[2]/app/controllers", 0766);
@@ -62,12 +62,12 @@ if (empty($argv[1])) {
         }
 
     /** Runs the server */
-    } elseif ($argv[1] === "run") {
+    } elseif (\in_array($argv[1], ["--run", "-r"])) {
         $port = $argv[2] ?? 9091;
         shell_exec("php -S 0.0.0.0:$port -t public/");
 
     /** Runs migrations file */
-    } elseif ($argv[1] === "migrate") {
+    } elseif (\in_array($argv[1], ["--migrate", "-m"])) {
         $dirname = dirname(__DIR__);
         shell_exec("php $dirname/package/migrations.php");
 

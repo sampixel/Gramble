@@ -15,8 +15,7 @@ class Parser {
 
     /**
      * Recursive function that iterates each folder
-     * to find the given basename relative path
-     * 
+     * to find the given basename relative path.
      * @param string $base The basename file
      * @param string $path The absolute pathname
      * @return string The relative pathname
